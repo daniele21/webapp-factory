@@ -1,0 +1,178 @@
+/* Semantic tokens (HSL for easy theming). Swappable per-theme via [data-theme] and .dark */
+:root {
+  /* surface & text */
+  --bg: 0 0% 100%;
+  --fg: 222 47% 11%;
+  --muted: 220 14% 96%;
+  --muted-fg: 222 47% 35%;
+  --card: 0 0% 100%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 221 83% 53%;
+
+  /* brand colors - enhanced palette */
+  --primary: 221 83% 53%;
+  --primary-fg: 210 40% 98%;
+  --primary-hover: 221 83% 48%;
+  --secondary: 262 83% 58%;
+  --secondary-fg: 210 40% 98%;
+  --secondary-hover: 262 83% 53%;
+  --accent: 174 70% 41%;
+  --accent-fg: 170 68% 96%;
+  --accent-hover: 174 70% 36%;
+  --destructive: 0 84% 60%;
+  --destructive-fg: 0 0% 98%;
+  --destructive-hover: 0 84% 55%;
+  --warning: 38 92% 50%;
+  --warning-fg: 48 96% 89%;
+  --success: 142 76% 36%;
+  --success-fg: 138 76% 97%;
+
+  /* gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+  --gradient-subtle: linear-gradient(135deg, hsl(var(--bg)) 0%, hsl(var(--muted)) 100%);
+
+  /* radius scale */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* elevation with modern shadows */
+  --elevation-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --elevation-sm: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --elevation-md: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --elevation-lg: 0 8px 16px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+  --elevation-xl: 0 16px 32px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.12);
+  --elevation-2xl: 0 24px 48px rgba(0, 0, 0, 0.20), 0 12px 24px rgba(0, 0, 0, 0.16);
+
+  /* glass morphism */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: 16px;
+
+  /* spacing scale - enhanced */
+  --space-0: 0;
+  --space-px: 1px;
+  --space-0_5: 0.125rem; /* 2px */
+  --space-1: 0.25rem;    /* 4px */
+  --space-1_5: 0.375rem; /* 6px */
+  --space-2: 0.5rem;     /* 8px */
+  --space-2_5: 0.625rem; /* 10px */
+  --space-3: 0.75rem;    /* 12px */
+  --space-3_5: 0.875rem; /* 14px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.25rem;    /* 20px */
+  --space-6: 1.5rem;     /* 24px */
+  --space-7: 1.75rem;    /* 28px */
+  --space-8: 2rem;       /* 32px */
+  --space-9: 2.25rem;    /* 36px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+  --space-32: 8rem;      /* 128px */
+
+  /* typography scale */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+  --font-size-4xl: 2.25rem;    /* 36px */
+  --font-size-5xl: 3rem;       /* 48px */
+  --font-size-6xl: 3.75rem;    /* 60px */
+  --font-size-7xl: 4.5rem;     /* 72px */
+
+  /* line heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* font weights */
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+
+  /* animations & transitions */
+  --transition-fast: 150ms ease-out;
+  --transition-base: 250ms ease-out;
+  --transition-slow: 350ms ease-out;
+  --transition-all: all var(--transition-base);
+
+  /* z-index scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* breakpoints (for JS usage) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* Dark mode overrides */
+.dark {
+  --bg: 222 47% 4%;
+  --fg: 210 40% 96%;
+  --muted: 217 33% 12%;
+  --muted-fg: 217 33% 65%;
+  --card: 222 47% 6%;
+  --border: 217 16% 20%;
+  --input: 217 16% 20%;
+  --ring: 221 83% 66%;
+
+  --primary: 221 83% 66%;
+  --primary-fg: 224 71% 4%;
+  --primary-hover: 221 83% 71%;
+  --secondary: 262 83% 72%;
+  --secondary-fg: 224 71% 4%;
+  --secondary-hover: 262 83% 77%;
+  --accent: 174 70% 52%;
+  --accent-fg: 224 71% 4%;
+  --accent-hover: 174 70% 57%;
+  --destructive: 0 84% 65%;
+  --destructive-hover: 0 84% 70%;
+  --warning: 38 92% 55%;
+  --success: 142 76% 41%;
+
+  /* gradients for dark mode */
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+  --gradient-subtle: linear-gradient(135deg, hsl(var(--bg)) 0%, hsl(var(--muted)) 100%);
+
+  /* glass morphism for dark mode */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+
+  /* enhanced shadows for dark mode */
+  --elevation-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --elevation-sm: 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --elevation-md: 0 4px 8px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --elevation-lg: 0 8px 16px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.4);
+  --elevation-xl: 0 16px 32px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.5);
+  --elevation-2xl: 0 24px 48px rgba(0, 0, 0, 0.7), 0 12px 24px rgba(0, 0, 0, 0.6);
+}

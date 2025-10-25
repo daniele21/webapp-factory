@@ -1,0 +1,23 @@
+/* Sky Brand Theme - Ocean Blue & Teal */
+:root[data-theme="sky"] {
+  /* Sky brand colors */
+  --primary: 199 89% 48%; /* sky-500 */
+  --primary-hover: 199 89% 43%;
+  --secondary: 234 89% 74%;
+  --secondary-hover: 234 89% 69%;
+  --accent: 160 84% 39%;
+  --accent-hover: 160 84% 34%;
+
+  /* Sky theme gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(199, 89%, 48%) 0%, hsl(234, 89%, 74%) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(160, 84%, 39%) 0%, hsl(199, 89%, 48%) 100%);
+  --gradient-hero: linear-gradient(135deg, hsl(199, 89%, 48%) 0%, hsl(234, 89%, 74%) 50%, hsl(160, 84%, 39%) 100%);
+
+  /* Sky brand shadows */
+  --elevation-brand: 0 8px 32px hsl(199, 89%, 48%, 0.15);
+  --elevation-brand-lg: 0 16px 48px hsl(199, 89%, 48%, 0.2);
+
+  /* Sky theme glass effects */
+  --glass-bg: rgba(14, 165, 233, 0.08);
+  --glass-border: rgba(14, 165, 233, 0.15);
+}

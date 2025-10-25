@@ -4,8 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+  "predev": "tsx ./scripts/build-themes.ts",
     "dev": "vite",
+  "prebuild": "tsx ./scripts/build-themes.ts",
     "build": "tsc -b && vite build",
+    "build-themes": "ts-node ./scripts/build-themes.ts",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest",
@@ -14,26 +17,35 @@
   "dependencies": {
     "@tanstack/react-query": "^5.56.0",
     "axios": "^1.7.7",
+    "class-variance-authority": "^0.7.1",
+    "framer-motion": "^12.23.24",
     "lucide-react": "^0.460.0",
+    "radix-ui": "^1.4.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2"
+    "react-router-dom": "^6.26.2",
+    "react-wrap-balancer": "^1.1.1",
+    "tailwind-merge": "^3.3.1"
+    ,"apexcharts": "^3.41.0",
+    "react-apexcharts": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.0.0",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.13",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18",
     "typescript": "^5.6.3",
+    "ts-node": "^10.9.1",
+    "tsx": "^4",
     "vite": "^5.4.9",
     "vite-plugin-pwa": "^0.20.5",
     "vitest": "^2.1.3",
+    "workbox-expiration": "^7.3.0",
     "workbox-precaching": "^7.3.0",
     "workbox-routing": "^7.3.0",
-    "workbox-strategies": "^7.3.0",
-    "workbox-expiration": "^7.3.0"
+    "workbox-strategies": "^7.3.0"
   }
 }

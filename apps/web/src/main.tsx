@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { routes } from './app/routes'
 import { AuthProvider } from './app/providers/AuthProvider'
 import { QueryProvider } from './app/providers/QueryProvider'
+import { ThemeProvider } from './app/theme/ThemeProvider'
 import './app/styles/index.css'
 import { initAnalytics, trackRouteChange } from './app/lib/analytics'
 
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryProvider>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </AuthProvider>
     </QueryProvider>
   </React.StrictMode>
