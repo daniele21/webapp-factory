@@ -3,7 +3,16 @@
 @import url('./brand-default.css');
 @import url('./brand-dark.css');
 @import url('./brand-sky.css');
+@import url('./brand-sunset.css');
+@import url('./brand-forest.css');
 @import url('./utilities.css');
+@import url('../theme/styles/base.css');
+@import url('../theme/styles/aurora.css');
+@import url('../theme/styles/carbon.css');
+@import url('../theme/styles/neon.css');
+@import url('../theme/styles/editorial.css');
+@import url('../theme/styles/playful.css');
+@import url('../theme/styles/finance.css');
 
 @tailwind base;
 @tailwind components;
@@ -19,6 +28,9 @@
 		-webkit-text-size-adjust: 100%;
 		-moz-text-size-adjust: 100%;
 		text-size-adjust: 100%;
+		--font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		--font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
 	}
 
 	html {
@@ -28,7 +40,7 @@
 	}
 
 	body {
-		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-family: var(--font-body);
 		font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 		font-variation-settings: normal;
 		background-color: hsl(var(--bg));

@@ -1,0 +1,18 @@
+:root[data-theme="forest"] {
+  --primary: 142 76% 36%;
+  --primary-hover: 142 76% 31%;
+  --secondary: 171 52% 32%;
+  --secondary-hover: 171 52% 27%;
+  --accent: 33 94% 55%;
+  --accent-hover: 33 94% 50%;
+
+  --gradient-primary: linear-gradient(135deg, hsl(152, 76%, 36%) 0%, hsl(171, 52%, 32%) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(33, 94%, 55%) 0%, hsl(142, 76%, 36%) 100%);
+  --gradient-hero: linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(171, 52%, 32%) 45%, hsl(33, 94%, 55%) 100%);
+
+  --elevation-brand: 0 10px 30px hsla(152, 76%, 25%, 0.2);
+  --elevation-brand-lg: 0 18px 50px hsla(171, 52%, 22%, 0.25);
+
+  --glass-bg: rgba(15, 118, 110, 0.08);
+  --glass-border: rgba(15, 118, 110, 0.2);
+}

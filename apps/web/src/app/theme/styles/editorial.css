@@ -1,0 +1,70 @@
+/* Editorial Classic */
+:root[data-visual="editorial"] {
+  --font-body: 'Source Serif 4', 'Source Serif Pro', 'Times New Roman', serif;
+  --font-display: 'General Sans', 'Source Sans Pro', 'Inter', sans-serif;
+}
+
+:root[data-visual="editorial"] body {
+  background-image: linear-gradient(180deg, #fcfbf7, #f4f1e9);
+  color: #1f2833;
+}
+
+:root[data-visual="editorial"] .card-elevated,
+:root[data-visual="editorial"] .card-glass,
+:root[data-visual="editorial"] .card-gradient,
+:root[data-visual="editorial"] .glass {
+  border-radius: 12px;
+  border: 1px solid rgba(31, 40, 51, 0.08);
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+:root[data-visual="editorial"] .style-demo section {
+  border-top: 1px dotted rgba(31, 40, 51, 0.25);
+  padding-top: var(--space-6);
+  margin-top: var(--space-10);
+}
+
+:root[data-visual="editorial"] .btn-ghost,
+:root[data-visual="editorial"] .btn-gradient {
+  border-radius: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+:root[data-visual="editorial"] .input-modern,
+:root[data-visual="editorial"] .input-glass {
+  border-radius: 0;
+  border: 1px solid rgba(31, 40, 51, 0.15);
+}
+
+:root.dark[data-visual="editorial"] body {
+  background-image: linear-gradient(180deg, #1f1c1a, #0f0e0d);
+  color: #f7f2ec;
+}
+
+:root.dark[data-visual="editorial"] .card-elevated,
+:root.dark[data-visual="editorial"] .card-glass,
+:root.dark[data-visual="editorial"] .card-gradient,
+:root.dark[data-visual="editorial"] .glass {
+  background: rgba(19, 16, 15, 0.92);
+  border: 1px solid rgba(247, 242, 236, 0.15);
+  box-shadow: none;
+}
+
+:root.dark[data-visual="editorial"] .style-demo section {
+  border-color: rgba(247, 242, 236, 0.25);
+}
+
+:root.dark[data-visual="editorial"] .btn-ghost,
+:root.dark[data-visual="editorial"] .btn-gradient {
+  border-color: rgba(247, 242, 236, 0.3);
+  color: #f7f2ec;
+}
+
+:root.dark[data-visual="editorial"] .input-modern,
+:root.dark[data-visual="editorial"] .input-glass {
+  background: rgba(12, 11, 10, 0.9);
+  border-color: rgba(247, 242, 236, 0.2);
+  color: #f7f2ec;
+}

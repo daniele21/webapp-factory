@@ -22,7 +22,7 @@ function IconFor(path: string, label: string) {
       </svg>
     )
   }
-  if (label.toLowerCase().includes('style')) {
+  if (label.toLowerCase().includes('style') || label.toLowerCase().includes('ui')) {
     return (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 20l9-7-9-11-9 11 9 7z"></path>

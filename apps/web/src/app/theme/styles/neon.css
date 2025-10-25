@@ -1,0 +1,72 @@
+/* Neon Pulse */
+:root[data-visual="neon"] {
+  --font-body: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+}
+
+:root[data-visual="neon"] body {
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255, 81, 225, 0.35), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(34, 211, 238, 0.25), transparent 40%),
+    linear-gradient(135deg, #130b24, #05060a);
+  color: #f5f5ff;
+}
+
+:root[data-visual="neon"] .card-elevated,
+:root[data-visual="neon"] .card-glass,
+:root[data-visual="neon"] .card-gradient,
+:root[data-visual="neon"] .glass {
+  border-radius: 16px;
+  background: rgba(15, 15, 30, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 30px rgba(255, 81, 225, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+:root[data-visual="neon"] .btn-ghost,
+:root[data-visual="neon"] .btn-gradient {
+  border-radius: 999px;
+  box-shadow: 0 0 25px rgba(255, 81, 225, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+:root[data-visual="neon"] .input-modern,
+:root[data-visual="neon"] .input-glass {
+  border-radius: 14px;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(15, 15, 30, 0.85);
+  color: #f8fafc;
+}
+
+:root.dark[data-visual="neon"] body {
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(34, 211, 238, 0.35), transparent 45%),
+    radial-gradient(circle at 70% 0%, rgba(236, 72, 153, 0.35), transparent 35%),
+    linear-gradient(135deg, #050007, #0f0417 40%, #010101 100%);
+}
+
+:root.dark[data-visual="neon"] .card-elevated,
+:root.dark[data-visual="neon"] .card-glass,
+:root.dark[data-visual="neon"] .card-gradient,
+:root.dark[data-visual="neon"] .glass {
+  background: rgba(6, 8, 18, 0.85);
+  border: 1px solid rgba(244, 114, 182, 0.3);
+  box-shadow:
+    0 0 35px rgba(236, 72, 153, 0.4),
+    0 0 80px rgba(14, 165, 233, 0.25);
+}
+
+:root.dark[data-visual="neon"] .btn-ghost,
+:root.dark[data-visual="neon"] .btn-gradient {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 25px rgba(236, 72, 153, 0.6),
+    0 0 35px rgba(6, 182, 212, 0.4);
+}
+
+:root.dark[data-visual="neon"] .input-modern,
+:root.dark[data-visual="neon"] .input-glass {
+  background: rgba(2, 4, 12, 0.9);
+  border-color: rgba(244, 114, 182, 0.35);
+}

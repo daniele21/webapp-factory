@@ -1,0 +1,18 @@
+:root[data-theme="sunset"] {
+  --primary: 14 96% 58%;
+  --primary-hover: 14 96% 53%;
+  --secondary: 328 85% 60%;
+  --secondary-hover: 328 85% 55%;
+  --accent: 45 93% 54%;
+  --accent-hover: 45 93% 49%;
+
+  --gradient-primary: linear-gradient(135deg, hsl(14, 96%, 58%) 0%, hsl(328, 85%, 60%) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(45, 93%, 54%) 0%, hsl(14, 96%, 58%) 100%);
+  --gradient-hero: linear-gradient(135deg, hsl(14, 96%, 58%) 0%, hsl(328, 85%, 60%) 45%, hsl(45, 93%, 54%) 100%);
+
+  --elevation-brand: 0 8px 32px hsla(14, 96%, 58%, 0.15);
+  --elevation-brand-lg: 0 16px 48px hsla(328, 85%, 60%, 0.2);
+
+  --glass-bg: rgba(255, 99, 71, 0.08);
+  --glass-border: rgba(255, 99, 71, 0.18);
+}

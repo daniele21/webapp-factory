@@ -1,0 +1,36 @@
+/* Shared hooks for all visual style presets */
+:root[data-visual] body {
+  background-attachment: fixed;
+  transition: background-image var(--transition-slow), background-color var(--transition-slow);
+}
+
+:root[data-visual] .card-elevated,
+:root[data-visual] .card-glass,
+:root[data-visual] .card-gradient,
+:root[data-visual] .glass {
+  transition:
+    border-radius var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    background var(--transition-base);
+}
+
+:root.dark {
+  color-scheme: dark;
+  --surface-glass: rgba(15, 23, 42, 0.55);
+  --surface-panel: rgba(15, 23, 42, 0.85);
+}
+
+:root.dark body {
+  background-color: hsl(var(--bg));
+  color: hsl(var(--fg));
+}
+
+:root.dark .card-elevated,
+:root.dark .card-glass,
+:root.dark .card-gradient,
+:root.dark .glass {
+  background: var(--surface-panel);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.45);
+}
