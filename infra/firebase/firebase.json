@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "apps/web/dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "**", "destination": "/index.html" },
+      { "source": "/api/**", "run": { "serviceId": "webapp-factory-api", "region": "europe-west1" } }
+    ]
+  }
+}

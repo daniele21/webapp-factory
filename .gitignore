@@ -1,0 +1,82 @@
+# Node
+node_modules/
+**/node_modules/
+.pnpm-store/
+
+# pnpm lock (optional to track) - keep pnpm-lock.yaml in repo, but ignore pnpm-debug
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+apps/web/dist/
+apps/web/.vite/
+.vite/
+
+# Vite / SWC / plugin caches
+.swc/
+.cache/
+
+# Turbo
+.turbo/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-* 
+
+# Environment files
+.env
+.env.*
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+pip-wheel-metadata/
+*.egg
+.envrc
+.venv/
+venv/
+.venv/*
+
+# VS Code Python extension workspace
+.python-version
+
+# Coverage and test outputs
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Generated OpenAPI (client)
+packages/api-client/openapi.json
+
+# Docker
+docker-compose.override.yml
+.env.local
+
+# Misc
+*.swp
+*.swo
+
+# Local-only developer secrets
+secrets.*
+
+# Mac Finder
+.DS_Store
+
+.devcontainer
+.github/copilot-instructions.md
