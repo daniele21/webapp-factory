@@ -2,6 +2,21 @@
 :root[data-visual="editorial"] {
   --font-body: 'Source Serif 4', 'Source Serif Pro', 'Times New Roman', serif;
   --font-display: 'General Sans', 'Source Sans Pro', 'Inter', sans-serif;
+  
+  /* Component Design Tokens */
+  --component-radius: 12px;
+  --component-radius-sm: 8px;
+  --component-radius-lg: 16px;
+  --component-density: relaxed;
+  --component-spacing: 1.5rem;
+  --component-spacing-sm: 1.25rem;
+  --component-elevation: none;
+  --component-elevation-hover: 0 2px 4px rgba(31, 40, 51, 0.1);
+  --component-border: 1px solid rgba(31, 40, 51, 0.08);
+  --component-backdrop: none;
+  --component-shadow-color: rgba(31, 40, 51, 0.1);
+  --component-motion: ease-out;
+  --component-motion-duration: 250ms;
 }
 
 :root[data-visual="editorial"] body {

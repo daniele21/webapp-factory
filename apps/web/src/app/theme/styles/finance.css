@@ -19,6 +19,21 @@
   --finance-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
   --finance-border-light: 1px solid rgba(15, 23, 42, 0.08);
   --finance-border-dark: 1px solid rgba(148, 163, 184, 0.35);
+  
+  /* Component Design Tokens */
+  --component-radius: 8px;
+  --component-radius-sm: 6px;
+  --component-radius-lg: 12px;
+  --component-density: compact;
+  --component-spacing: 0.75rem;
+  --component-spacing-sm: 0.5rem;
+  --component-elevation: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --component-elevation-hover: 0 6px 12px rgba(0, 0, 0, 0.1);
+  --component-border: 1px solid rgba(15, 23, 42, 0.08);
+  --component-backdrop: none;
+  --component-shadow-color: rgba(0, 0, 0, 0.07);
+  --component-motion: ease-in-out;
+  --component-motion-duration: 175ms;
 }
 
 :root[data-visual="finance"] body {

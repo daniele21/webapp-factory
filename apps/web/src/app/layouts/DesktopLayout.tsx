@@ -1,5 +1,5 @@
 import NavSidebar from '../components/NavSidebar'
-import Footer from '../components/Footer'
+import { Footer } from '../components/factory'
 import { ThemeSwitch } from '../components/ThemeSwitch'
 
 export default function DesktopLayout({ children }: { children: React.ReactNode }) {

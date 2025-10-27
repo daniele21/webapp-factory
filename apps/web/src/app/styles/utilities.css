@@ -96,6 +96,81 @@
     filter: saturate(1.2);
   }
 
+  /* === THEME-AWARE UTILITY HELPERS === */
+  /* Use these in components to pick up brand & visual tokens automatically */
+  .bg-brand-highlight {
+    /* subtle brand-tinted background */
+    background: hsl(var(--primary) / 0.12);
+  }
+
+  .border-brand-subtle {
+    border: 1px solid hsl(var(--primary) / 0.16);
+  }
+
+  .text-brand {
+    color: hsl(var(--primary));
+  }
+
+  .elevation-brand {
+    box-shadow: var(--elevation-md), 0 8px 32px hsl(var(--primary) / 0.08);
+  }
+
+  /* === COMPONENT DESIGN UTILITIES === */
+  /* These adapt to the selected visual style automatically */
+  .component-radius {
+    border-radius: var(--component-radius);
+  }
+
+  .component-radius-sm {
+    border-radius: var(--component-radius-sm);
+  }
+
+  .component-radius-lg {
+    border-radius: var(--component-radius-lg);
+  }
+
+  .component-spacing {
+    padding: var(--component-spacing);
+  }
+
+  .component-spacing-sm {
+    padding: var(--component-spacing-sm);
+  }
+
+  .component-elevation {
+    box-shadow: var(--component-elevation);
+  }
+
+  .component-elevation:hover {
+    box-shadow: var(--component-elevation-hover);
+  }
+
+  .component-border {
+    border: var(--component-border);
+  }
+
+  .component-backdrop {
+    backdrop-filter: var(--component-backdrop);
+    -webkit-backdrop-filter: var(--component-backdrop);
+  }
+
+  .component-motion {
+    transition: all var(--component-motion-duration) var(--component-motion);
+  }
+
+  /* Component density variants */
+  .component-dense {
+    padding: calc(var(--component-spacing) * 0.5);
+  }
+
+  .component-comfortable {
+    padding: var(--component-spacing);
+  }
+
+  .component-spacious {
+    padding: calc(var(--component-spacing) * 1.5);
+  }
+
   /* Button variants */
   .btn-ghost {
     background: transparent;

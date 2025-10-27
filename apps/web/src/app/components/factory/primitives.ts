@@ -1,0 +1,16 @@
+// Barrel for factory primitives
+export { Avatar } from './primitives/Avatar'
+export { Badge } from './primitives/Badge'
+export { Chip } from './primitives/Chip'
+export { Icon } from './primitives/Icon'
+export { Pills } from './primitives/Pills'
+export { Skeleton } from './primitives/Skeleton'
+export { Tag } from './primitives/Tag'
+
+export { default as AvatarDefault } from './primitives/Avatar'
+export { default as BadgeDefault } from './primitives/Badge'
+export { default as ChipDefault } from './primitives/Chip'
+export { default as IconDefault } from './primitives/Icon'
+export { default as PillsDefault } from './primitives/Pills'
+export { default as SkeletonDefault } from './primitives/Skeleton'
+export { default as TagDefault } from './primitives/Tag'
