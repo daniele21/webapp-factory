@@ -1,5 +1,6 @@
 import { SidebarNav } from './factory'
-import { NAV } from '../../../../../packages/config/nav'
+import { NAV, getVisibleNav } from '../../../../../packages/config/nav'
+import { useAppConfig } from '../../config/provider'
 
 type Props = {
   mobile?: boolean
@@ -12,6 +13,9 @@ export default function NavSidebar({ mobile = false, onClose }: Props) {
     ? 'w-full max-w-xs h-full p-4 space-y-4 bg-card border-r border-border'
     : 'relative w-64 min-h-screen p-5 space-y-6 bg-card/80 border-r border-border backdrop-blur-md overflow-hidden'
 
+  const { config } = useAppConfig()
+  const items = getVisibleNav(config, null)
+
   return (
     <aside className={`app-sidebar ${containerClass}`}>
       {!mobile && (
@@ -19,7 +23,7 @@ export default function NavSidebar({ mobile = false, onClose }: Props) {
       )}
 
       {/* Delegate rendering of the navigation list to the factory component */}
-      <SidebarNav items={NAV as any} footerSlot={mobile ? undefined : undefined} />
+      <SidebarNav items={items as any} footerSlot={mobile ? undefined : undefined} />
     </aside>
   )
 }

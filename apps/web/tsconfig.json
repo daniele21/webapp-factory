@@ -6,7 +6,9 @@
     "module": "ESNext",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@config": ["../../packages/config"],
+      "@config/*": ["../../packages/config/*"]
     },
     "skipLibCheck": true,
     "strict": true,

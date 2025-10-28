@@ -5,6 +5,7 @@ import { routes } from './app/routes'
 import { AuthProvider } from './app/providers/AuthProvider'
 import { QueryProvider } from './app/providers/QueryProvider'
 import { ThemeProvider } from './app/theme/ThemeProvider'
+import { AppConfigProvider } from './config/provider'
 import './app/styles/index.css'
 import { initAnalytics, trackRouteChange } from './app/lib/analytics'
 
@@ -16,9 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryProvider>
       <AuthProvider>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
+        <AppConfigProvider>
+          <ThemeProvider>
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </AppConfigProvider>
       </AuthProvider>
     </QueryProvider>
   </React.StrictMode>

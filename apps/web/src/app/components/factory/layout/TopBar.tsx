@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu } from 'lucide-react'
 import type { ReactNode } from 'react'
 import DrawerNav from './DrawerNav'
+import { useAppConfig } from '../../../../config/provider'
 
 export type MobileNavProps = {
 	items: any[]
@@ -13,8 +14,10 @@ export type MobileNavProps = {
 export function TopBar({ items, title, actions }: MobileNavProps) {
 	const [open, setOpen] = useState(false)
 	const location = useLocation()
-	const flatItems = useMemo(() => items.flatMap((item) => item.children ?? [item]), [items])
-	const active = flatItems.find((item) => item.to === location.pathname)
+	const { config } = useAppConfig()
+	const source = items ?? (config?.navigation ?? [])
+	const flatItems = useMemo(() => source.flatMap((item) => (item.children ?? [item]) as any), [source])
+	const active = flatItems.find((item: any) => item.to === location.pathname)
 
 	return (
 		<>
