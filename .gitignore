@@ -2,7 +2,7 @@
 node_modules/
 **/node_modules/
 .pnpm-store/
-
+firestore-access.json
 # pnpm lock (optional to track) - keep pnpm-lock.yaml in repo, but ignore pnpm-debug
 pnpm-debug.log*
 
