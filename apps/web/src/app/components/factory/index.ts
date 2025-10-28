@@ -9,6 +9,7 @@ export * from './display'
 export * from './overlays'
 export * from './controls'
 export * from './navigation'
+export * from './auth'
 
 // Expose a few commonly used factory components directly from the barrel
 export { TopBar } from './layout/TopBar'
@@ -24,6 +25,7 @@ export { FileDropzone } from './forms/FileDropzone'
 export { FactoryForm } from './forms/FactoryForm'
 export { OAuthButton } from './navigation/OAuthButton'
 export { AuthMenu } from './navigation/AuthMenu'
+export { GoogleOAuthPopup } from './auth/GoogleOAuthPopup'
 export { default as StyleShowcase } from './StyleShowcase'
 
 // Common factory primitives

@@ -179,7 +179,7 @@ Monorepo starter to ship full‑stack PWAs fast. Frontend (React + Vite + TS), B
 2. Copy `.env.example` files to `.env` and fill values
 3. Start dev: `docker compose -f infra/docker/compose.dev.yml up -d` (Redis)
 4. `pnpm dev` (web + api + emulators)
-5. Open http://localhost:5173
+5. Open http://127.0.0.1:5173
 ```
 
 ---
@@ -740,14 +740,14 @@ class Settings(BaseSettings):
     project_id: str = "dev-project"
     google_client_id: str
     google_client_secret: str
-    oauth_redirect_url: str = "http://localhost:5173"
+    oauth_redirect_url: str = "http://127.0.0.1:5173"
     jwt_secret: str
     redis_url: str = "redis://localhost:6379/0"
     rate_limit_per_minute: int = 120
     stripe_public_key: str | None = None
     stripe_secret_key: str | None = None
     stripe_webhook_secret: str | None = None
-    cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
+    cors_origins: list[str] = Field(default_factory=lambda: ["http://127.0.0.1:5173"])
 
     class Config:
         env_file = ".env"
@@ -1044,7 +1044,7 @@ CMD ["uvicorn", "apps.api.main:app", "--host", "0.0.0.0", "--port", "8080"]
 PROJECT_ID=your-gcp-project
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
-OAUTH_REDIRECT_URL=http://localhost:5173
+OAUTH_REDIRECT_URL=http://127.0.0.1:5173
 JWT_SECRET=dev-secret
 REDIS_URL=redis://localhost:6379
 RATE_LIMIT_PER_MINUTE=120

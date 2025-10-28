@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.settings import settings
-from api.routes import health, auth, users, protected
+from api.routes import health, auth, users, protected, google_auth
 from api.middleware.request_id import RequestIDMiddleware
 from api.middleware.logging import LoggingMiddleware
+from api.middleware.security_headers import SecurityHeadersMiddleware
 
 
 app = FastAPI(title="Webapp Factory API", version="1.0.0")
@@ -26,6 +27,8 @@ def log_startup_info():
     except Exception:
         logger.exception("Failed to log startup auth info")
 
+# Add security headers middleware
+app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RequestIDMiddleware)
 app.add_middleware(LoggingMiddleware)
 app.add_middleware(
@@ -34,10 +37,13 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 app.include_router(health.router)
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
+# New Google OAuth routes with GIS popup flow
+app.include_router(google_auth.router, prefix="/auth", tags=["auth", "google"])
 app.include_router(users.router, prefix="/users", tags=["users"])
 # app.include_router(payments.router, prefix="/payments", tags=["payments"])
 app.include_router(protected.router)
@@ -46,3 +52,4 @@ app.include_router(protected.router)
 from prometheus_client import make_asgi_app
 metrics_app = make_asgi_app()
 app.mount("/metrics", metrics_app)
+

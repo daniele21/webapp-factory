@@ -27,7 +27,10 @@ export default defineConfig({
       devOptions: { enabled: true }
     })
   ],
-  server: { port: 5173 },
+  // Bind dev server to IPv4 loopback explicitly to avoid 'localhost' resolving
+  // to IPv6 (::1) on some systems. This makes the dev server listen on
+  // 127.0.0.1 by default.
+  server: { host: '127.0.0.1', port: 5173 },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

@@ -34,7 +34,7 @@
     },
     "cors_origins": [
       "http://localhost:3000",
-      "http://localhost:5173",
+      "http://127.0.0.1:5173",
       "http://localhost:8080"
     ],
     "cookies": {
@@ -131,6 +131,6 @@
   },
   "urls": {
     "api_base_url": "http://localhost:8000",
-    "frontend_base_url": "http://localhost:5173"
+    "frontend_base_url": "http://127.0.0.1:5173"
   }
 }

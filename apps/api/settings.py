@@ -212,7 +212,7 @@ class Settings(BaseSettings):
             return self._auth_config.cors_origins
         return [
             "http://localhost:3000",
-            "http://localhost:5173",
+            "http://127.0.0.1:5173",
             "http://localhost:8080"
         ]
     
@@ -265,7 +265,7 @@ class Settings(BaseSettings):
     def FRONTEND_BASE_URL(self) -> str:
         """Frontend base URL (backward compatibility)."""
         if self._environment_config:
-            return self._environment_config.get("frontend_base_url", "http://localhost:5173")
+            return self._environment_config.get("frontend_base_url", "http://127.0.0.1:5173")
         # Do not hardcode frontend URL; prefer explicit APP_FRONTEND_BASE_URL setting.
         return os.getenv("APP_FRONTEND_BASE_URL")
     

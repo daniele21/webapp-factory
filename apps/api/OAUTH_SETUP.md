@@ -127,8 +127,8 @@ Initiate OAuth flow for the specified provider.
 
 **Example**:
 ```
-GET /auth/google/login?redirect=http://localhost:5173
-GET /auth/github/login?redirect=http://localhost:5173
+GET /auth/google/login?redirect=http://127.0.0.1:5173
+GET /auth/github/login?redirect=http://127.0.0.1:5173
 ```
 
 #### `GET /auth/{provider}/callback`
@@ -358,7 +358,7 @@ APP_JWT_SECRET=your-secret-key
 APP_JWT_ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 # Frontend URL (for post-login redirect)
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://127.0.0.1:5173
 ```
 
 ### Provider Comparison

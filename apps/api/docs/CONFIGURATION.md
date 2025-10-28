@@ -76,7 +76,7 @@ APP_JWT_ACCESS_TOKEN_EXPIRE_MINUTES=15
 # OAuth
 APP_GOOGLE_CLIENT_ID=your-client-id
 APP_GOOGLE_CLIENT_SECRET=your-client-secret
-APP_OAUTH_REDIRECT_URI=http://localhost:5173/auth/callback
+APP_OAUTH_REDIRECT_URI=http://127.0.0.1:5173/auth/callback
 
 # Security
 APP_MIN_PASSWORD_LENGTH=8

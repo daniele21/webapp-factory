@@ -44,10 +44,10 @@ def get_development_config() -> dict:
     )
     
     # Development OAuth settings
-    auth_config.oauth_redirect_uri = "http://localhost:5173/auth/callback"
+    auth_config.oauth_redirect_uri = "http://127.0.0.1:5173/auth/callback"
     auth_config.cors_origins = [
         "http://localhost:3000",
-        "http://localhost:5173",
+        "http://127.0.0.1:5173",
         "http://localhost:8080",
         "http://localhost:8000",  # API docs
     ]
@@ -74,7 +74,7 @@ def get_development_config() -> dict:
         
         # Development URLs
         "api_base_url": "http://localhost:8000",
-        "frontend_base_url": "http://localhost:5173",
+        "frontend_base_url": "http://127.0.0.1:5173",
         
         # Development ports
         "api_port": 8000,
@@ -106,7 +106,7 @@ APP_JWT_ISSUER=webapp-factory-dev
 # OAuth Configuration
 APP_GOOGLE_CLIENT_ID=your-google-client-id
 APP_GOOGLE_CLIENT_SECRET=your-google-client-secret
-APP_OAUTH_REDIRECT_URI=http://localhost:5173/auth/callback
+APP_OAUTH_REDIRECT_URI=http://127.0.0.1:5173/auth/callback
 
 # Database Configuration
 APP_GOOGLE_PROJECT_ID=webapp-factory-dev
@@ -119,7 +119,7 @@ APP_REDIS_DATABASE=0
 
 # URLs
 APP_BASE_URL=http://localhost:8000
-APP_FRONTEND_BASE_URL=http://localhost:5173
+APP_FRONTEND_BASE_URL=http://127.0.0.1:5173
 
 # Logging
 APP_LOG_LEVEL=DEBUG

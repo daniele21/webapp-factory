@@ -234,7 +234,7 @@ class AuthConfig(BaseConfig):
     
     # Redirect URLs
     oauth_redirect_uri: str = Field(
-        default="http://localhost:5173/auth/callback",
+        default="http://127.0.0.1:5173/auth/callback",
         description="OAuth redirect URI"
     )
     
@@ -242,7 +242,7 @@ class AuthConfig(BaseConfig):
     cors_origins: List[str] = Field(
         default_factory=lambda: [
             "http://localhost:3000",
-            "http://localhost:5173",
+            "http://127.0.0.1:5173",
             "http://localhost:8080",
         ],
         description="Allowed CORS origins for auth endpoints"

@@ -24,7 +24,7 @@ The Google auth UI is **already integrated** into both desktop and mobile layout
    pnpm run dev:web
    ```
 
-2. **Open your browser** to `http://localhost:5173`
+2. **Open your browser** to `http://127.0.0.1:5173`
 
 3. **Look at the top-right corner** - you'll see the auth UI
 

@@ -147,7 +147,7 @@ def json_to_auth_config(json_data: Dict[str, Any]) -> AuthConfig:
         jwt=jwt_config,
         security_policy=security_config,
         google_oauth=google_oauth,
-        oauth_redirect_uri=oauth_data.get("redirect_uri", "http://localhost:5173/auth/callback"),
+        oauth_redirect_uri=oauth_data.get("redirect_uri", "http://127.0.0.1:5173/auth/callback"),
         cors_origins=auth_data.get("cors_origins", ["http://localhost:3000"]),
         cookie_domain=cookies_data.get("domain"),
         cookie_secure=cookies_data.get("secure", False),
