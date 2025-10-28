@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Brand, isBrand } from './brands'
 import { VisualStyle, isVisualStyle } from './visualStyles'
 
-type ThemeMode = 'light' | 'dark'
+type ThemeMode = 'light' | 'dark' | 'system'
 
 type Ctx = {
   mode: ThemeMode
@@ -21,7 +21,7 @@ const readStorage = (key: string): string | null => (typeof window !== 'undefine
 const safeBrand = (): Brand => (isBrand(readStorage(kBrand)) ? (readStorage(kBrand) as Brand) : 'default')
 const safeMode = (): ThemeMode => {
   const stored = readStorage(kMode) as ThemeMode | null
-  return stored === 'dark' || stored === 'light' ? stored : 'light'
+  return stored === 'dark' || stored === 'light' || stored === 'system' ? stored : 'system'
 }
 const safeVisual = (): VisualStyle => (isVisualStyle(readStorage(kVisual)) ? (readStorage(kVisual) as VisualStyle) : 'aurora')
 
@@ -32,15 +32,30 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const root = document.documentElement
-    root.classList.toggle('dark', mode === 'dark')
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    const applied = mode === 'system' ? (prefersDark ? 'dark' : 'light') : mode
+
+    // keep compatibility with existing code that toggles .dark
+    root.classList.toggle('dark', applied === 'dark')
+
+    // Apply brand and visual (palettes)
     root.setAttribute('data-theme', brand)
     root.setAttribute('data-visual', visual)
+
+    // Persist user's explicit choice (store the selected mode key)
     localStorage.setItem(kMode, mode)
     localStorage.setItem(kBrand, brand)
     localStorage.setItem(kVisual, visual)
-    // PWA theme-color sync
+
+    // Update PWA theme-color meta tag to the resolved surface color
     const meta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null
-    if (meta) meta.content = mode === 'dark' ? '#0b0f19' : '#ffffff'
+    if (meta) {
+      const computed = getComputedStyle(root).getPropertyValue('--surface-1') || getComputedStyle(root).getPropertyValue('--card')
+      const color = computed.trim() || (applied === 'dark' ? '#0b0f19' : '#ffffff')
+      // color may be '222 23% 10%' or 'hsl(...)' depending; if it's HSL raw tokens, wrap in hsl()
+      const final = color.startsWith('hsl(') || color.startsWith('#') ? color : `hsl(${color})`
+      meta.setAttribute('content', final)
+    }
   }, [mode, brand, visual])
 
   const value = useMemo(() => ({ mode, brand, visual, setMode, setBrand, setVisual }), [mode, brand, visual])

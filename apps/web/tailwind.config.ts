@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 export default {
-  darkMode: ['class'],
+  darkMode: ['class', '[data-theme="dark"]'],
   content: [
     './index.html',
     './src/**/*.{ts,tsx}',
@@ -59,46 +59,25 @@ export default {
         relaxed: 'var(--leading-relaxed)',
         loose: 'var(--leading-loose)',
       },
-      // Enhanced color system with hover states
+      // Enhanced color system with CSS variable mapping
       colors: {
         bg: 'hsl(var(--bg))',
-        fg: 'hsl(var(--fg))',
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          fg: 'hsl(var(--muted-fg))',
-        },
-        card: 'hsl(var(--card))',
+        surface1: 'hsl(var(--surface-1))',
+        surface2: 'hsl(var(--surface-2))',
+        text: 'hsl(var(--text))',
+        muted: 'hsl(var(--muted))',
+        'muted-fg': 'hsl(var(--muted-fg))',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          fg: 'hsl(var(--primary-fg))',
-          hover: 'hsl(var(--primary-hover))',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          fg: 'hsl(var(--secondary-fg))',
-          hover: 'hsl(var(--secondary-hover))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          fg: 'hsl(var(--accent-fg))',
-          hover: 'hsl(var(--accent-hover))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          fg: 'hsl(var(--destructive-fg))',
-          hover: 'hsl(var(--destructive-hover))',
-        },
-        warning: {
-          DEFAULT: 'hsl(var(--warning))',
-          fg: 'hsl(var(--warning-fg))',
-        },
-        success: {
-          DEFAULT: 'hsl(var(--success))',
-          fg: 'hsl(var(--success-fg))',
-        },
+        accent: 'hsl(var(--accent))',
+        'accent-fg': 'hsl(var(--accent-fg))',
+        'chart-1': 'hsl(var(--chart-1))',
+        'chart-2': 'hsl(var(--chart-2))',
+        'chart-3': 'hsl(var(--chart-3))',
+        'chart-grid': 'hsl(var(--chart-grid))',
+        'chart-axis': 'hsl(var(--chart-axis))',
+        primary: 'hsl(var(--primary))',
       },
       // Enhanced border radius scale
       borderRadius: {
@@ -118,6 +97,7 @@ export default {
         lg: 'var(--elevation-lg)',
         xl: 'var(--elevation-xl)',
         '2xl': 'var(--elevation-2xl)',
+        soft: '0 8px 30px rgba(0,0,0,0.12)',
       },
       // Complete spacing scale
       spacing: {

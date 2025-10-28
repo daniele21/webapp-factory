@@ -134,45 +134,51 @@
   --breakpoint-2xl: 1536px;
 }
 
-/* Dark mode overrides */
+/* Dark mode overrides - tuned surfaces, borders and shadows (intentional, not inverted) */
 .dark {
-  --bg: 222 47% 4%;
-  --fg: 210 40% 96%;
-  --muted: 217 33% 12%;
+  /* core semantic mapping */
+  --bg: 222 29% 8%;            /* page background */
+  --fg: 210 20% 96%;           /* primary text */
+  --text: var(--fg);           /* alias for components expecting --text */
+  --muted: 215 16% 72%;        /* muted UI copy */
   --muted-fg: 217 33% 65%;
-  --card: 222 47% 6%;
-  --border: 217 16% 20%;
-  --input: 217 16% 20%;
-  --ring: 221 83% 66%;
 
-  --primary: 221 83% 66%;
-  --primary-fg: 224 71% 4%;
-  --primary-hover: 221 83% 71%;
+  /* surfaces: subtle elevation tiers */
+  --card: 222 23% 10%;         /* surface-1 */
+  --surface-1: 222 23% 10%;
+  --surface-2: 222 21% 13%;
+
+  --border: 220 15% 20%;
+  --input: 220 15% 20%;
+  --ring: 222 84% 62%;
+
+  /* brand/state */
+  --primary: 222 84% 62%;
+  --primary-fg: 0 0% 100%;
+  --primary-hover: 222 84% 68%;
   --secondary: 262 83% 72%;
-  --secondary-fg: 224 71% 4%;
-  --secondary-hover: 262 83% 77%;
-  --accent: 174 70% 52%;
-  --accent-fg: 224 71% 4%;
-  --accent-hover: 174 70% 57%;
-  --destructive: 0 84% 65%;
-  --destructive-hover: 0 84% 70%;
-  --warning: 38 92% 55%;
-  --success: 142 76% 41%;
+  --secondary-fg: 0 0% 100%;
+  --accent: 222 84% 62%;
+  --accent-fg: 0 0% 100%;
+  --destructive: 0 85% 62%;
+  --warning: 38 95% 55%;
+  --success: 142 72% 40%;
 
   /* gradients for dark mode */
   --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
   --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
-  --gradient-subtle: linear-gradient(135deg, hsl(var(--bg)) 0%, hsl(var(--muted)) 100%);
 
   /* glass morphism for dark mode */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.04);
 
-  /* enhanced shadows for dark mode */
-  --elevation-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --elevation-sm: 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
-  --elevation-md: 0 4px 8px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
-  --elevation-lg: 0 8px 16px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.4);
-  --elevation-xl: 0 16px 32px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.5);
-  --elevation-2xl: 0 24px 48px rgba(0, 0, 0, 0.7), 0 12px 24px rgba(0, 0, 0, 0.6);
+  /* subtle, focused shadows and elevation mapping */
+  --elevation-xs: 0 1px 0 rgba(255,255,255,0.02), 0 1px 2px rgba(0,0,0,0.35);
+  --elevation-sm: 0 6px 20px rgba(0,0,0,0.25);
+  --elevation-md: 0 12px 36px rgba(0,0,0,0.35);
+  --elevation-lg: 0 20px 60px rgba(0,0,0,0.45);
+  --elevation-xl: 0 30px 90px rgba(0,0,0,0.6);
+  --elevation-2xl: 0 40px 120px rgba(0,0,0,0.65);
 }
+
+/* Backwards compatibility: older code may read --text or --surface-1 directly; tokens above provide those mappings */

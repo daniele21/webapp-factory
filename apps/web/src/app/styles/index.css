@@ -13,6 +13,7 @@
 @import url('../theme/styles/editorial.css');
 @import url('../theme/styles/playful.css');
 @import url('../theme/styles/finance.css');
+@import url('./theme-polish.css');
 
 @tailwind base;
 @tailwind components;
