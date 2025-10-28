@@ -19,6 +19,8 @@ from urllib.parse import urlparse
 
 from api.services.google_oauth_service import get_google_oauth_service, GoogleOAuthService
 from api.services.auth_service import get_current_user
+from api.services import user_service
+from api.schemas.user import UserProfileCreate
 from api.settings import settings
 import jwt as pyjwt
 
@@ -280,6 +282,28 @@ async def exchange_google_code(
     
     user_info = result["user_info"]
     refresh_token = result.get("refresh_token")
+
+    # Persist/update user profile in Firestore so downstream services have identity data
+    try:
+        metadata = {k: v for k, v in {
+            "given_name": user_info.get("given_name"),
+            "family_name": user_info.get("family_name"),
+            "locale": user_info.get("locale"),
+            "email_verified": user_info.get("email_verified"),
+            "provider": "google",
+        }.items() if v is not None}
+
+        profile = UserProfileCreate(
+            id=user_info["id"],
+            email=user_info["email"],
+            name=user_info.get("name"),
+            picture=user_info.get("picture"),
+            hd=user_info.get("hd"),
+            metadata=metadata or None,
+        )
+        await user_service.upsert_user(profile, mark_login=True)
+    except Exception as exc:  # noqa: BLE001
+        user_service.handle_service_error(exc)
     
     # Create app session JWT
     session_token = _create_app_session(user_info, provider="google")

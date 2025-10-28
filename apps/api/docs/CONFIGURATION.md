@@ -375,3 +375,7 @@ APP_ENV=production
 ```
 
 This configuration system gives you maximum flexibility while maintaining security and ease of use!
+
+## Related Guides
+
+- [User Management Template](USER_MANAGEMENT.md) — Firestore-backed user repository, service, and API examples ready to customise for your project.
