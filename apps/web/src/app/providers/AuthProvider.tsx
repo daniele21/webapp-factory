@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { api } from '../lib/api'
 
-type User = { id: string; email: string; name?: string; picture?: string; roles: string[] }
+type User = { id: string; email: string; name?: string; picture?: string; roles: string[]; provider?: string }
 
 type AuthCtx = {
   user: User | null
   loading: boolean
-  login: () => void
+  login: (provider?: string) => void
   logout: () => Promise<void>
 }
 
@@ -17,12 +17,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    api.get('/auth/me').then(r => setUser(r.data ?? null)).finally(() => setLoading(false))
+    api.get('/auth/me').then(r => setUser(r.data ?? null)).catch(() => setUser(null)).finally(() => setLoading(false))
   }, [])
 
-  const login = () => {
+  const login = (provider: string = 'google') => {
     const redirect = encodeURIComponent(window.location.origin)
-    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/google/login?redirect=${redirect}`
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/${provider}/login?redirect=${redirect}`
   }
 
   const logout = async () => {

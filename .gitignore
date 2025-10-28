@@ -79,4 +79,4 @@ secrets.*
 .DS_Store
 
 .devcontainer
-.github/copilot-instructions.md
+.github

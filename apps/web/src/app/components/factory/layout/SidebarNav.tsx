@@ -30,7 +30,8 @@ export type SidebarNavProps = {
 export function SidebarNav({ items, footerSlot }: SidebarNavProps) {
 	const [collapsed, setCollapsed] = useState(false)
 	const location = useLocation()
-	const renderItem = (item: NavItem) => {
+	const renderItem = (item: NavItem, keyOverride?: string | number) => {
+		const key = item.id ?? keyOverride ?? item.to ?? item.href ?? item.label
 		const to = item.to ?? item.href ?? '#'
 		const isExternal = Boolean(item.href && !item.to)
 		const active = item.to ? location.pathname === item.to : false
@@ -54,11 +55,11 @@ export function SidebarNav({ items, footerSlot }: SidebarNavProps) {
 		)
 
 		return item.to ? (
-			<NavLink key={item.id} to={item.to} end={item.end} className={className}>
+			<NavLink key={key} to={item.to} end={item.end} className={className}>
 				{Inner}
 			</NavLink>
 		) : (
-			<a key={item.id} href={item.href} target={item.target} rel="noreferrer" className={className}>
+			<a key={key} href={item.href} target={item.target} rel="noreferrer" className={className}>
 				{Inner}
 			</a>
 		)
@@ -87,16 +88,19 @@ export function SidebarNav({ items, footerSlot }: SidebarNavProps) {
 				</button>
 			</div>
 			<div className="space-y-6">
-				{items.map((item) =>
-					item.children ? (
-						<div key={item.id} className="space-y-2">
+				{items.map((item, idx) => {
+					const itemKey = item.id ?? item.to ?? item.href ?? item.label ?? idx
+					return item.children ? (
+						<div key={itemKey} className="space-y-2">
 							{!collapsed && <p className={sectionTitleClasses}>{item.label}</p>}
-							<div className="flex flex-col gap-1.5">{item.children.map((child) => renderItem(child))}</div>
+							<div className="flex flex-col gap-1.5">
+								{item.children.map((child, cidx) => renderItem(child, `${itemKey}-${cidx}`))}
+							</div>
 						</div>
 					) : (
-						<div key={item.id}>{renderItem(item)}</div>
+						<div key={itemKey}>{renderItem(item, itemKey)}</div>
 					)
-				)}
+				})}
 			</div>
 			{footerSlot && <div className="mt-auto">{footerSlot}</div>}
 		</div>

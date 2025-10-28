@@ -9,6 +9,7 @@
 // update imports in `layouts/MobileLayout.tsx` to use the factory `TopBar`.
 
 import { ThemeSwitch } from './ThemeSwitch'
+import { AuthMenuConnected } from './AuthMenuConnected'
 
 type Props = {
   onOpenNav?: () => void
@@ -32,6 +33,7 @@ export default function TopBar({ onOpenNav }: Props) {
         {/* Use the factory Header to render title/visual and keep actions consistent */}
         <div className="ml-auto flex items-center gap-3">
           <ThemeSwitch />
+          <AuthMenuConnected />
         </div>
       </div>
     </header>

@@ -23,6 +23,7 @@ export { TagInput } from './forms/TagInput'
 export { FileDropzone } from './forms/FileDropzone'
 export { FactoryForm } from './forms/FactoryForm'
 export { OAuthButton } from './navigation/OAuthButton'
+export { AuthMenu } from './navigation/AuthMenu'
 export { default as StyleShowcase } from './StyleShowcase'
 
 // Common factory primitives

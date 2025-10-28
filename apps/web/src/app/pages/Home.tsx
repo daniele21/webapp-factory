@@ -12,7 +12,7 @@ export default function Home() {
           <button className="border px-3 py-1 rounded" onClick={logout}>Logout</button>
         </>
       ) : (
-        <button className="border px-3 py-1 rounded" onClick={login}>Login with Google</button>
+        <button className="border px-3 py-1 rounded" onClick={() => login()}>Login with Google</button>
       )}
     </div>
   )

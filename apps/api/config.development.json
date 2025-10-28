@@ -1,0 +1,136 @@
+{
+  "environment": "development",
+  "api": {
+    "debug": true,
+    "reload": true,
+    "port": 8000,
+    "cors_allow_all": true,
+    "docs_enabled": true
+  },
+  "auth": {
+    "jwt": {
+      "secret_key": "dev-secret-key-not-for-production-use-only",
+      "algorithm": "HS256",
+      "access_token_expire_minutes": 60,
+      "refresh_token_expire_days": 7,
+      "audience": "webapp-factory-dev",
+      "issuer": "webapp-factory-dev"
+    },
+    "oauth": {
+      "google": {
+        "client_id": "${GOOGLE_CLIENT_ID:-your-google-client-id}",
+        "client_secret": "${GOOGLE_CLIENT_SECRET:-your-google-client-secret}"
+      },
+      "redirect_uri": "${APP_OAUTH_REDIRECT_URI:-http://127.0.0.1:8000/auth/google/callback}"
+    },
+    "security": {
+      "min_password_length": 4,
+      "require_uppercase": false,
+      "require_lowercase": false,
+      "require_numbers": false,
+      "max_login_attempts": 10,
+      "lockout_duration_minutes": 5,
+      "mfa_enabled": false
+    },
+    "cors_origins": [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "http://localhost:8080"
+    ],
+    "cookies": {
+      "domain": "localhost",
+      "secure": false,
+      "httponly": true,
+      "samesite": "lax"
+    }
+  },
+  "database": {
+    "firestore": {
+      "project_id": "webapp-factory-dev",
+      "use_emulator": true,
+      "emulator_host": "localhost:8080",
+      "timeout_seconds": 30,
+      "max_retries": 3
+    },
+    "redis": {
+      "url": "redis://localhost:6379",
+      "database": 0,
+      "max_connections": 100,
+      "connection_timeout": 5,
+      "default_ttl": 3600,
+      "session_ttl": 86400
+    }
+  },
+  "features": {
+    "storage_backend": "memory",
+    "cache_ttl_seconds": 300,
+    "strict_mode": false,
+    "log_evaluations": true,
+    "admin_api_enabled": true,
+    "metrics_enabled": true,
+    "analytics_enabled": true,
+    "flags": {
+      "oauth_login": {
+        "enabled": true,
+        "strategy": "all",
+        "description": "Enable OAuth login with Google"
+      },
+      "rate_limiting": {
+        "enabled": true,
+        "strategy": "all",
+        "description": "Enable rate limiting for API endpoints"
+      },
+      "new_dashboard": {
+        "enabled": false,
+        "strategy": "percentage",
+        "percentage": 20,
+        "description": "Enable the redesigned dashboard interface"
+      },
+      "advanced_analytics": {
+        "enabled": true,
+        "strategy": "whitelist",
+        "conditions": {
+          "user_plans": ["pro", "enterprise"]
+        },
+        "description": "Advanced analytics and reporting features"
+      }
+    }
+  },
+  "logging": {
+    "root_level": "DEBUG",
+    "format": "text",
+    "log_requests": true,
+    "log_request_body": true,
+    "log_response_body": true,
+    "mask_sensitive_data": true,
+    "handlers": [
+      {
+        "name": "console",
+        "type": "console",
+        "level": "DEBUG",
+        "format": "text"
+      }
+    ],
+    "metrics": {
+      "enabled": true,
+      "prometheus_enabled": true,
+      "collection_interval": 300
+    },
+    "tracing": {
+      "enabled": true,
+      "sample_rate": 0.1,
+      "slow_request_threshold_ms": 1000,
+      "trace_db_queries": true
+    },
+    "error_tracking": {
+      "enabled": true,
+      "sentry_enabled": false,
+      "capture_unhandled_exceptions": true,
+      "scrub_sensitive_data": true
+    }
+  },
+  "urls": {
+    "api_base_url": "http://localhost:8000",
+    "frontend_base_url": "http://localhost:5173"
+  }
+}

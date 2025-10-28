@@ -1,5 +1,6 @@
 // Barrel for navigation components
 export { Accordion } from './navigation/Accordion'
+export { AuthMenu } from './navigation/AuthMenu'
 export { CommandMenu } from './navigation/CommandMenu'
 export { OAuthButton } from './navigation/OAuthButton'
 export { OverflowMenu } from './navigation/OverflowMenu'
@@ -8,6 +9,7 @@ export { SearchBar } from './navigation/SearchBar'
 export { Tabs } from './navigation/Tabs'
 
 export { default as AccordionDefault } from './navigation/Accordion'
+export { default as AuthMenuDefault } from './navigation/AuthMenu'
 export { default as CommandMenuDefault } from './navigation/CommandMenu'
 export { default as OAuthButtonDefault } from './navigation/OAuthButton'
 export { default as OverflowMenuDefault } from './navigation/OverflowMenu'
