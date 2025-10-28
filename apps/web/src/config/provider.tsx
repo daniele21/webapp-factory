@@ -15,7 +15,9 @@ const C = createContext<Ctx>({ config: null, setConfig: () => {}, theme: 'system
 function applyTokens(theme: 'light' | 'dark', cfg: AppConfig) {
   const root = document.documentElement
   const t = theme === 'dark' ? cfg.theme.dark : cfg.theme.light
-  root.setAttribute('data-theme', theme)
+  // Don't set data-theme here - it's used by ThemeProvider for brand selection
+  // Just toggle the .dark class for compatibility
+  root.classList.toggle('dark', theme === 'dark')
   root.style.setProperty('--bg', t.bg)
   root.style.setProperty('--surface-1', t.surface1)
   root.style.setProperty('--surface-2', t.surface2)

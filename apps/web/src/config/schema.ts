@@ -20,8 +20,8 @@ const tokens = z.object({
 export const AppConfigSchema = z.object({
   brand: z.object({
     name: z.string(),
-    logoUrl: z.string().url().optional(),
-    faviconUrl: z.string().url().optional(),
+    logoUrl: z.string().optional(),
+    faviconUrl: z.string().optional(),
   }),
   theme: z.object({
     light: tokens,

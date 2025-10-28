@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { Link } from 'react-router-dom'
 import { X } from 'lucide-react'
-import type { ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 import type { NavItem } from '../types'
 
 export type DrawerNavProps = {
@@ -12,10 +12,15 @@ export type DrawerNavProps = {
 
 export function DrawerNav({ items, open, onOpenChange }: DrawerNavProps) {
 	const handleClose = () => onOpenChange(false)
-	const renderInteractive = (entry: NavItem, className: string, children: ReactNode) => {
+	const renderInteractive = (
+		entry: NavItem,
+		className: string,
+		children: ReactNode,
+		key?: string
+	) => {
 		if (entry.to) {
 			return (
-				<Link to={entry.to} className={className} onClick={handleClose}>
+				<Link key={key} to={entry.to} className={className} onClick={handleClose}>
 					{children}
 				</Link>
 			)
@@ -27,6 +32,7 @@ export function DrawerNav({ items, open, onOpenChange }: DrawerNavProps) {
 				rel={entry.target === '_blank' ? 'noreferrer' : undefined}
 				className={className}
 				onClick={handleClose}
+				key={key}
 			>
 				{children}
 			</a>
@@ -57,7 +63,8 @@ export function DrawerNav({ items, open, onOpenChange }: DrawerNavProps) {
 											renderInteractive(
 												child,
 												'block rounded-lg px-3 py-2 text-sm text-muted-fg hover:bg-muted/50',
-												child.label
+												child.label,
+												child.id
 											)
 										)}
 									</div>
