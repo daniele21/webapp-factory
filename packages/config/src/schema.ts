@@ -33,6 +33,12 @@ export const AppConfigSchema = z.object({
   theme: z.object({
     light: tokens,
     dark: tokens,
+    // Optional defaults for the UI brand palette and visual style
+    defaultBrand: z.string().optional(),
+    defaultVisual: z.string().optional(),
+  // Optional locks: when true, the UI should not allow changing brand/visual
+  lockBrand: z.boolean().optional(),
+  lockVisual: z.boolean().optional(),
     radius: z.number().min(0).max(48).default(12),
     fontFamily: z.string().optional(),
   }),
