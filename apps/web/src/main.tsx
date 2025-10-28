@@ -17,11 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryProvider>
       <AuthProvider>
-        <AppConfigProvider>
-          <ThemeProvider>
+        <ThemeProvider>
+          <AppConfigProvider>
             <RouterProvider router={router} />
-          </ThemeProvider>
-        </AppConfigProvider>
+          </AppConfigProvider>
+        </ThemeProvider>
       </AuthProvider>
     </QueryProvider>
   </React.StrictMode>

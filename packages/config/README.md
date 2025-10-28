@@ -235,6 +235,39 @@ setConfig({
 })
 ```
 
+### Component Controls
+
+Drive factory components straight from config. For example, toggle the auth menu or change its default provider:
+
+```json
+{
+  "components": {
+    "authMenu": {
+      "enabled": true,
+      "loginProvider": "github",
+      "loginLabel": "Continue with GitHub",
+      "showSettings": false,
+      "providers": [
+        { "id": "github", "label": "Continue with GitHub" },
+        { "id": "google", "label": "Google Login" }
+      ]
+    }
+  }
+}
+```
+
+In React you can read those values without additional wiring:
+
+```tsx
+const { config } = useAppConfig()
+
+if (config.components.authMenu.enabled) {
+  return <AuthMenuConnected />
+}
+
+return null
+```
+
 ## Migration from Hardcoded Config
 
 If you have existing hardcoded navigation:

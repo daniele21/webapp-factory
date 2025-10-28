@@ -70,13 +70,15 @@ function MyCustomHeader() {
 #### Props
 
 ```typescript
+import type { AuthProviderId } from './OAuthButton'
+
 type AuthMenuProps = {
   user: AuthUser | null              // Current user object
   loading?: boolean                  // Loading state (shows spinner on login button)
   onLogin?: () => void              // Callback when login button is clicked
   onLogout?: () => void | Promise<void>  // Callback when logout is clicked
   loginLabel?: string               // Custom label for login button
-  loginProvider?: 'google' | 'github' | 'slack' | 'email'  // OAuth provider
+  loginProvider?: AuthProviderId    // OAuth provider (defaults from config)
   showSettings?: boolean            // Show/hide settings menu item (default: true)
   onSettingsClick?: () => void     // Callback when settings is clicked
 }
@@ -89,6 +91,8 @@ type AuthUser = {
   roles?: string[]
 }
 ```
+
+> Defaults for the login provider, label, and menu visibility come from `app.config.json` (`components.authMenu`). Override props when you need per-instance customization.
 
 ### AuthMenuConnected
 

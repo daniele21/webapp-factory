@@ -211,7 +211,7 @@ function Header() {
 >
   <div className="flex items-center gap-2">
     <GoogleIcon />
-    <span>Continue with Google</span>
+    <span>Google Login</span>
   </div>
 </GoogleOAuthPopup>
 ```

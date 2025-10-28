@@ -56,7 +56,7 @@ pnpm run dev:web
 ```tsx
 <GoogleOAuthPopup onSuccess={handleSuccess}>
   <Button variant="outline" className="w-full">
-    <GoogleIcon /> Continue with Google
+    <GoogleIcon /> Google Login
   </Button>
 </GoogleOAuthPopup>
 ```

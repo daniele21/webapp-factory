@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { LogOut, User, Settings, ChevronDown } from 'lucide-react'
 import { Avatar } from '../primitives/Avatar'
 import { Popover } from '../overlays/Popover'
-import { Button } from '../../ui/button'
-import { OAuthButton } from './OAuthButton'
+import { OAuthButton, type AuthProviderId } from './OAuthButton'
+import { useAppConfig } from '../../../../config/provider'
 
 export type AuthUser = {
 	id: string
@@ -19,7 +19,7 @@ export type AuthMenuProps = {
 	onLogin?: (provider?: string) => void
 	onLogout?: () => void | Promise<void>
 	loginLabel?: string
-	loginProvider?: 'google' | 'github' | 'slack' | 'email'
+	loginProvider?: AuthProviderId
 	showSettings?: boolean
 	onSettingsClick?: () => void
 }
@@ -59,20 +59,30 @@ export function AuthMenu({
 	onLogin,
 	onLogout,
 	loginLabel,
-	loginProvider = 'google',
-	showSettings = true,
+	loginProvider,
+	showSettings,
 	onSettingsClick,
 }: AuthMenuProps) {
+	const { config } = useAppConfig()
+	const authMenuConfig = config?.components?.authMenu
+
+	if (authMenuConfig?.enabled === false) {
+		return null
+	}
+
+	const resolvedProvider: AuthProviderId = loginProvider ?? authMenuConfig?.loginProvider ?? 'google'
+	const resolvedLoginLabel = loginLabel ?? authMenuConfig?.loginLabel
+	const shouldShowSettings = showSettings ?? authMenuConfig?.showSettings ?? true
 	const [loggingOut, setLoggingOut] = useState(false)
 
 	// Not authenticated - show login button
 	if (!user) {
 		return (
 			<OAuthButton
-				provider={loginProvider}
-				label={loginLabel}
+				provider={resolvedProvider}
+				label={resolvedLoginLabel}
 				loading={loading}
-				onClick={() => onLogin?.(loginProvider)}
+				onClick={() => onLogin?.(resolvedProvider)}
 				aria-label="Sign in"
 			/>
 		)
@@ -141,7 +151,7 @@ export function AuthMenu({
 						<span>Profile</span>
 					</button>
 
-					{showSettings && (
+					{shouldShowSettings && (
 						<button
 							className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-bg/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
 							onClick={onSettingsClick}

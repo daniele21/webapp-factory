@@ -17,12 +17,18 @@ export type RawNavItem = {
   plans?: string[]
 }
 
-type User = { role?: string; plan?: string } | null
+// Accept either a single `role` string or an array `roles` to support richer auth
+type User = { role?: string; roles?: string[]; plan?: string } | null
 
 export function getVisibleNav(cfg: { navigation?: RawNavItem[] } | null | undefined, user: User) {
   const list = cfg?.navigation ?? (NAV as unknown as RawNavItem[])
   return list.filter((item) => {
-    const roleOk = !item.roles?.length || (user?.role && item.roles.includes(user.role))
+    // role check: if item has no role restrictions it's visible; otherwise
+    // allow match if user's single role or any of user's roles intersects
+    const roleOk = !item.roles?.length || (
+      (user?.role && item.roles.includes(user.role)) ||
+      (user?.roles && user.roles.some((r) => item.roles!.includes(r)))
+    )
     const planOk = !item.plans?.length || (user?.plan && item.plans.includes(user.plan))
     return roleOk && planOk
   })

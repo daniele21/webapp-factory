@@ -5,36 +5,36 @@
   },
   "theme": {
     "light": {
-      "bg": "0 0% 99%",
-      "surface1": "0 0% 100%",
-      "surface2": "0 0% 98%",
-      "text": "222 47% 11%",
-      "muted": "220 9% 46%",
-      "border": "220 13% 91%",
-      "accent": "222 84% 56%",
+      "bg": "0 0% 100%",
+      "surface1": "210 30% 97%",
+      "surface2": "210 28% 94%",
+      "text": "222 50% 12%",
+      "muted": "220 12% 46%",
+      "border": "213 18% 88%",
+      "accent": "217 100% 62%",
       "accentFg": "0 0% 100%",
-      "ring": "222 84% 56%",
-      "chart1": "222 84% 56%",
-      "chart2": "262 83% 58%",
-      "chart3": "199 89% 48%",
-      "chartGrid": "220 14% 89%",
-      "chartAxis": "222 9% 36%"
+      "ring": "217 100% 62%",
+      "chart1": "217 91% 60%",
+      "chart2": "262 90% 67%",
+      "chart3": "199 89% 50%",
+      "chartGrid": "215 16% 86%",
+      "chartAxis": "222 12% 42%"
     },
     "dark": {
-      "bg": "222 29% 8%",
-      "surface1": "222 23% 10%",
-      "surface2": "222 21% 13%",
+      "bg": "222 34% 7%",
+      "surface1": "222 28% 11%",
+      "surface2": "222 24% 15%",
       "text": "210 20% 96%",
-      "muted": "215 16% 72%",
-      "border": "220 15% 20%",
-      "accent": "222 84% 62%",
-      "accentFg": "0 0% 100%",
-      "ring": "222 84% 62%",
-      "chart1": "222 84% 70%",
-      "chart2": "262 83% 72%",
-      "chart3": "199 89% 66%",
-      "chartGrid": "220 12% 22%",
-      "chartAxis": "220 12% 60%"
+      "muted": "215 14% 70%",
+      "border": "220 14% 24%",
+      "accent": "217 100% 74%",
+      "accentFg": "222 40% 12%",
+      "ring": "217 100% 74%",
+      "chart1": "217 98% 76%",
+      "chart2": "262 90% 76%",
+      "chart3": "199 89% 68%",
+      "chartGrid": "220 12% 24%",
+      "chartAxis": "220 15% 62%"
     },
     "radius": 14,
     "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto"
@@ -69,14 +69,14 @@
       "label": "Users",
       "to": "/users",
       "icon": "Users",
-      "roles": ["admin", "manager"]
+      "roles": ["admin", "manager", "user"]
     },
     {
       "id": "billing",
       "label": "Billing",
       "to": "/billing",
       "icon": "CreditCard",
-      "plans": ["pro", "enterprise"]
+      "plans": ["pro", "enterprise", "free"]
     },
     {
       "id": "settings",
@@ -87,5 +87,16 @@
   ],
   "features": {
     "nprogress": true
+  },
+  "components": {
+    "authMenu": {
+      "enabled": true,
+      "loginProvider": "google",
+      "loginLabel": "Sign In",
+      "showSettings": true,
+      "providers": [
+        { "id": "google", "label": "Google Login" }
+      ]
+    }
   }
 }

@@ -17,6 +17,13 @@ const tokens = z.object({
   chartAxis: z.string().optional(),
 })
 
+const authProviderId = z.enum(['google', 'github', 'slack', 'email'])
+
+const authProvider = z.object({
+  id: authProviderId,
+  label: z.string().optional(),
+})
+
 export const AppConfigSchema = z.object({
   brand: z.object({
     name: z.string(),
@@ -55,6 +62,27 @@ export const AppConfigSchema = z.object({
     plans: z.array(z.string()).optional(),
   })),
   features: z.object({ nprogress: z.boolean().default(true) }).default({ nprogress: true }),
+  components: z.object({
+    authMenu: z.object({
+      enabled: z.boolean().default(true),
+      loginProvider: authProviderId.default('google'),
+      loginLabel: z.string().optional(),
+      showSettings: z.boolean().default(true),
+      providers: z.array(authProvider).default([{ id: 'google' }]),
+    }).default({
+      enabled: true,
+      loginProvider: 'google',
+      showSettings: true,
+      providers: [{ id: 'google' }],
+    }),
+  }).default({
+    authMenu: {
+      enabled: true,
+      loginProvider: 'google',
+      showSettings: true,
+      providers: [{ id: 'google' }],
+    },
+  }),
 })
 
 export type AppConfig = z.infer<typeof AppConfigSchema>

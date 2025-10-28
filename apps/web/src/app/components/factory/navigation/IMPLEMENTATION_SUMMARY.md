@@ -131,7 +131,7 @@ function MyComponent() {
 ## User Experience
 
 ### Not Logged In
-- User sees: **"Continue with Google"** button
+- User sees: **"Google Login"** button
 - Click triggers: Google OAuth flow (via `/api/auth/google/login`)
 
 ### Logged In

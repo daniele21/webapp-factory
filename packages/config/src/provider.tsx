@@ -43,11 +43,18 @@ export function AppConfigProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const url = (import.meta.env as any).VITE_APP_CONFIG_URL || '/app.config.json'
-    fetch(url, { cache: 'no-cache' })
-      .then((r) => r.json())
-      .then((j) => AppConfigSchema.parse(j))
-      .then((valid) => setConfig(valid))
-      .catch((err) => console.error('Invalid app.config.json:', err))
+    async function load() {
+      try {
+        const r = await fetch(url, { cache: 'no-cache' })
+        const j = await r.json()
+        const valid = AppConfigSchema.parse(j)
+        setConfig(normalizeConfig(valid))
+      } catch (err) {
+        console.error('Failed to load/parse app.config.json, applying fallback config:', err)
+        setConfig(getFallbackConfig())
+      }
+    }
+    load()
   }, [])
 
   useEffect(() => {
@@ -63,3 +70,72 @@ export function AppConfigProvider({ children }: { children: React.ReactNode }) {
 }
 
 export const useAppConfig = () => useContext(C)
+
+function normalizeConfig(cfg: AppConfig): AppConfig {
+  if (!cfg.components?.authMenu) return cfg
+  const { loginLabel, loginProvider, providers } = cfg.components.authMenu
+  if (!loginLabel || !Array.isArray(providers) || providers.length === 0) return cfg
+  const providerId = loginProvider || 'google'
+  const normalizedProviders = providers.map((provider) =>
+    provider.id === providerId ? { ...provider, label: loginLabel } : provider
+  )
+  return {
+    ...cfg,
+    components: {
+      ...cfg.components,
+      authMenu: {
+        ...cfg.components.authMenu,
+        providers: normalizedProviders,
+      },
+    },
+  }
+}
+
+function getFallbackConfig(): AppConfig {
+  return normalizeConfig({
+    brand: { name: 'Webapp Factory', logoUrl: '/icons/logo-192.png' },
+    theme: {
+      light: {
+        bg: '0 0% 100%',
+        surface1: '210 30% 97%',
+        surface2: '210 28% 94%',
+        text: '222 50% 12%',
+        muted: '220 12% 46%',
+        border: '213 18% 88%',
+        accent: '217 100% 62%',
+        accentFg: '0 0% 100%',
+        ring: '217 100% 62%',
+      },
+      dark: {
+        bg: '222 34% 7%',
+        surface1: '222 28% 11%',
+        surface2: '222 24% 15%',
+        text: '210 20% 96%',
+        muted: '215 14% 70%',
+        border: '220 14% 24%',
+        accent: '217 100% 74%',
+        accentFg: '222 40% 12%',
+        ring: '217 100% 74%',
+      },
+      radius: 14,
+      fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto',
+    },
+    layout: { sidebar: { enabled: true, width: 264, collapsedWidth: 72, defaultCollapsed: false, showPlanCard: true }, topbar: { search: true, commandPalette: true, showNotifications: true, showThemeToggle: true }, mobileTabs: { enabled: true } },
+    navigation: [],
+    features: { nprogress: true },
+    components: {
+      authMenu: {
+        enabled: true,
+        loginProvider: 'google',
+        loginLabel: 'Google Login',
+        showSettings: true,
+        providers: [
+          { id: 'google' },
+          { id: 'github', label: 'Continue with GitHub' },
+          { id: 'slack', label: 'Continue with Slack' },
+          { id: 'email', label: 'Continue with Email' },
+        ],
+      },
+    },
+  } as unknown as AppConfig)
+}

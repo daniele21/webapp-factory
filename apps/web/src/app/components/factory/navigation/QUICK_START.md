@@ -10,7 +10,7 @@ The Google auth UI is **already integrated** into both desktop and mobile layout
 
 ### Desktop View
 - Top-right corner: Theme switcher + Auth menu
-- **Not logged in**: "Continue with Google" button
+- **Not logged in**: "Google Login" button
 - **Logged in**: Your avatar + name
 
 ### Mobile View  
