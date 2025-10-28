@@ -3,7 +3,7 @@ import { LogOut, User, Settings, ChevronDown } from 'lucide-react'
 import { Avatar } from '../primitives/Avatar'
 import { Popover } from '../overlays/Popover'
 import { OAuthButton, type AuthProviderId } from './OAuthButton'
-import { useAppConfig } from '../../../../config/provider'
+import { useAppConfig } from '@config/src/provider'
 
 export type AuthUser = {
 	id: string

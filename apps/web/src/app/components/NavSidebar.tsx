@@ -1,6 +1,6 @@
 import { SidebarNav } from './factory'
 import { NAV, getVisibleNav } from '../../../../../packages/config/nav'
-import { useAppConfig } from '../../config/provider'
+import { useAppConfig } from '@config/src/provider'
 import { useAuth } from '../providers/AuthProvider'
 import {
   Home,

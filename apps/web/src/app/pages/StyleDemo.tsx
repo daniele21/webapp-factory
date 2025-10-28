@@ -48,7 +48,7 @@ const checklist = [
 ]
 
 export default function StyleDemo() {
-  const { mode, setMode, brand, setBrand, visual, setVisual } = useTheme()
+  const { mode, setMode, brand, setBrand, visual, setVisual, lockBrand, lockVisual } = useTheme()
 
   return (
     <div className="style-demo min-h-screen bg-bg px-4 py-10 sm:px-8 space-y-12">
@@ -103,7 +103,9 @@ export default function StyleDemo() {
               <button
                 key={preset.id}
                 type="button"
-                onClick={() => setBrand(preset.id)}
+                onClick={() => !lockBrand && setBrand(preset.id)}
+                disabled={lockBrand}
+                title={lockBrand ? 'Brand palette locked by site configuration' : undefined}
                 className={`card-elevated text-left p-5 rounded-2xl border transition focus-visible-only ${
                   active ? 'ring-2 ring-offset-2 ring-primary' : ''
                 }`}
@@ -154,7 +156,9 @@ export default function StyleDemo() {
               <button
                 key={preset.id}
                 type="button"
-                onClick={() => setVisual(preset.id)}
+                onClick={() => !lockVisual && setVisual(preset.id)}
+                disabled={lockVisual}
+                title={lockVisual ? 'Visual style locked by site configuration' : undefined}
                 className={`card-elevated text-left p-5 rounded-2xl border transition focus-visible-only ${
                   active ? 'ring-2 ring-offset-2 ring-accent' : ''
                 }`}

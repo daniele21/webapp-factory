@@ -1,7 +1,7 @@
 import { useTheme } from '../../theme/ThemeProvider'
 
 export function Topbar() {
-  const { mode, setMode } = useTheme()
+  const { mode, setMode, brand, visual, lockBrand, lockVisual } = useTheme()
 
   return (
     <header
@@ -46,12 +46,12 @@ export function Topbar() {
         {/* Actions: theme, notifications, account */}
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setMode(mode === 'dark' ? 'light' : mode === 'light' ? 'system' : 'dark')}
+            onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border hover:bg-surface2 transition
                        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]"
-            aria-label="Toggle theme"
+            aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
           >
-            {mode === 'dark' ? '🌙' : mode === 'light' ? '☀️' : '🌓'}
+            {mode === 'dark' ? '🌙' : '☀️'}
           </button>
           <button
             className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border hover:bg-surface2 transition
@@ -72,6 +72,15 @@ export function Topbar() {
               U
             </div>
           </button>
+        </div>
+        {/* Theme debug (small, non-intrusive) */}
+        <div className="ml-3 hidden sm:flex items-center gap-2 text-[12px] text-muted">
+          <span title="Theme mode">Mode: <strong className="ml-1">{mode}</strong></span>
+          <span title="Brand id">Brand: <strong className="ml-1">{brand}</strong></span>
+          <span title="Visual id">Visual: <strong className="ml-1">{visual}</strong></span>
+          {lockBrand || lockVisual ? (
+            <span className="ml-2 px-2 rounded bg-surface2 text-xs text-muted">Locked</span>
+          ) : null}
         </div>
       </div>
     </header>

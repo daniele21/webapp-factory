@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu } from 'lucide-react'
 import type { ReactNode } from 'react'
 import DrawerNav from './DrawerNav'
-import { useAppConfig } from '../../../../config/provider'
+import { useAppConfig } from '@config/src/provider'
+import { useTheme } from '../../../theme/ThemeProvider'
 
 export type MobileNavProps = {
 	items: any[]
@@ -34,10 +35,26 @@ export function TopBar({ items, title, actions }: MobileNavProps) {
 					<p className="text-xs uppercase tracking-[0.3em] text-muted-fg">Factory</p>
 					<p className="text-sm font-semibold">{title ?? active?.label ?? 'Navigate'}</p>
 				</div>
-				<div className="ml-auto flex items-center gap-2">{actions}</div>
+					<div className="ml-auto flex items-center gap-2">
+								{actions}
+								{/* Theme debug (mobile) */}
+								<ThemeDebug />
+							</div>
 			</div>
 			<DrawerNav open={open} onOpenChange={setOpen} items={items} />
 		</>
+	)
+}
+
+function ThemeDebug() {
+	const { mode, brand, visual, lockBrand, lockVisual } = useTheme()
+	return (
+		<div className="ml-2 hidden md:flex items-center gap-2 text-[12px] text-muted">
+			<span title="Theme mode">{mode}</span>
+			<span title="Brand">{brand}</span>
+			<span title="Visual">{visual}</span>
+			{lockBrand || lockVisual ? <span className="ml-1 px-2 rounded bg-surface2 text-xs text-muted">Locked</span> : null}
+		</div>
 	)
 }
 

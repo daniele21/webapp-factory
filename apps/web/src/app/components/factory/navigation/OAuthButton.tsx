@@ -1,7 +1,7 @@
 import { type ComponentPropsWithoutRef, type ReactElement } from 'react'
 import { Github, Slack, Mail } from 'lucide-react'
 import { Button } from '../../ui/button'
-import { useAppConfig } from '../../../../config/provider'
+import { useAppConfig } from '@config/src/provider'
 import { cn } from '../../../lib/cn'
 
 export type AuthProviderId = 'google' | 'github' | 'slack' | 'email'

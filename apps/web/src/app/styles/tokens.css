@@ -182,3 +182,10 @@
 }
 
 /* Backwards compatibility: older code may read --text or --surface-1 directly; tokens above provide those mappings */
+/* Short-term fix: ensure headings inherit the semantic text color so
+   brand or utility rules can't accidentally make them too light. This
+   uses !important to override more-specific compiled utility styles
+   and is intentionally small and targeted. */
+h1, h2, h3, h4, h5, h6 {
+  color: hsl(var(--text)) !important;
+}

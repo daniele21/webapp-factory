@@ -9,6 +9,7 @@
     "prebuild": "tsx ./scripts/build-themes.ts",
     "build": "tsc -b && vite build",
     "build-themes": "ts-node ./scripts/build-themes.ts",
+  "audit-brands": "ts-node ./scripts/audit-brands.ts",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest",

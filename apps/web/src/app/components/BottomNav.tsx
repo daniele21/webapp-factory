@@ -1,6 +1,6 @@
 import { BottomTabs } from './factory'
 import { NAV, getVisibleNav } from '../../../../../packages/config/nav'
-import { useAppConfig } from '../../config/provider'
+import { useAppConfig } from '@config/src/provider'
 
 // App-specific bottom navigation: delegate mobile tabs to factory BottomTabs and
 // keep a small desktop footer.

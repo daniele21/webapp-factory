@@ -12,9 +12,9 @@ export const routes = createRoutesFromElements(
   <Route element={<App />}>
     <Route index element={<Home />} />
     <Route path="/home" element={<Dashboard />} />
-    <Route path="/style-demo" element={<StyleDemo />} />
-    <Route path="/ui-library" element={<UiLibrary />} />
-  <Route path="/auth" element={<AuthDemo />} />
+    <Route path="/dashboard" element={<StyleDemo />} />
+    <Route path="/settings" element={<UiLibrary />} />
+  <Route path="/users" element={<AuthDemo />} />
     <Route path="/legal/cookies" element={<CookiePolicy />} />
     <Route path="/legal/terms" element={<Terms />} />
   </Route>
