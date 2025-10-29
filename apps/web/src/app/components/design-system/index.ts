@@ -10,11 +10,10 @@ export * from './overlays'
 export * from './controls'
 export * from './navigation'
 export * from './auth'
+export * from './app-shell'
 
-// Expose a few commonly used factory components directly from the barrel
-export { TopBar } from './layout/TopBar'
+// Expose a few commonly used design-system components directly from the barrel
 export { SidebarNav } from './layout/SidebarNav'
-export { BottomTabs } from './layout/BottomTabs'
 export { Header } from './layout/Header'
 export { Page } from './layout/Page'
 export { DatePickerField } from './forms/DatePickerField'
@@ -28,6 +27,6 @@ export { AuthMenu } from './navigation/AuthMenu'
 export { GoogleOAuthPopup } from './auth/GoogleOAuthPopup'
 export { default as StyleShowcase } from './StyleShowcase'
 
-// Common factory primitives
+// Common design-system primitives
 export { Icon } from './primitives/Icon'
 export { Footer } from './layout/Footer'

@@ -1,4 +1,4 @@
-import { AppShell } from '../components/AppShell'
+import { AppShell } from '../components/design-system'
 
 /**
  * Example usage of the AppShell component

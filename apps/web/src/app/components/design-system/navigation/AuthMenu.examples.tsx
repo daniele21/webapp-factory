@@ -1,19 +1,19 @@
+import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../../providers/AuthProvider'
+import { AuthMenu, AppShell, Header } from '../../../components/design-system'
+import { AuthMenuConnected } from '../../../components/AuthMenuConnected'
+
 /**
  * Authentication UI Component Examples
- * 
+ *
  * This file demonstrates various ways to use the AuthMenu component
  * in different scenarios.
  */
 
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../../providers/AuthProvider'
-import { AuthMenu } from '../../../components/factory'
-import { AuthMenuConnected } from '../../../components/AuthMenuConnected'
-import { Header, TopBar, AppShell } from '../../../components/factory'
-
 /**
  * Example 1: Basic Usage with AuthMenuConnected
- * 
+ *
  * This is the simplest and recommended approach for most cases.
  * The component automatically connects to the AuthProvider.
  */
@@ -29,7 +29,7 @@ export function Example1_BasicUsage() {
 
 /**
  * Example 2: Custom Login Provider
- * 
+ *
  * Use a different OAuth provider (GitHub, Slack, etc.)
  */
 export function Example2_CustomProvider() {
@@ -48,7 +48,7 @@ export function Example2_CustomProvider() {
 
 /**
  * Example 3: With Custom Settings Handler
- * 
+ *
  * Add a custom click handler for the settings menu item
  */
 export function Example3_CustomSettings() {
@@ -68,7 +68,7 @@ export function Example3_CustomSettings() {
 
 /**
  * Example 4: Conditional Settings Based on Role
- * 
+ *
  * Only show settings to admin users
  */
 export function Example4_RoleBasedSettings() {
@@ -90,50 +90,37 @@ export function Example4_RoleBasedSettings() {
 }
 
 /**
- * Example 5: In AppShell Layout
- * 
- * Use AuthMenu in a consistent app-wide layout
+ * Example 5: Inside the AppShell layout
+ *
+ * Combine AuthMenu with the shared AppShell for a consistent frame.
  */
 export function Example5_AppShellLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<AppShell
-			header={
+		<AppShell>
+			<div className="space-y-6">
 				<Header
 					title="Webapp Factory"
 					subtitle="Build faster, ship better"
 					actions={<AuthMenuConnected />}
 				/>
-			}
-			sidebar={<div>Sidebar content</div>}
-		>
-			{children}
+				<div>{children}</div>
+			</div>
 		</AppShell>
 	)
 }
 
 /**
- * Example 6: Mobile TopBar
- * 
- * Use in a mobile-friendly top bar with drawer navigation
- */
-export function Example6_MobileTopBar({ navItems }: { navItems: any[] }) {
-	return (
-		<TopBar
-			items={navItems}
-			title="App"
-			actions={<AuthMenuConnected />}
-		/>
-	)
-}
-
-/**
- * Example 7: Manual Control (without AuthProvider)
- * 
+ * Example 6: Manual Control (without AuthProvider)
+ *
  * Use AuthMenu directly with manual state management.
  * Useful for testing or when not using AuthProvider.
  */
-export function Example7_ManualControl() {
-	const [user, setUser] = React.useState(null)
+export function Example6_ManualControl() {
+	const [user, setUser] = React.useState<{
+		name?: string
+		email: string
+		roles?: string[]
+	} | null>(null)
 	const [loading, setLoading] = React.useState(false)
 
 	const handleLogin = () => {
@@ -159,11 +146,11 @@ export function Example7_ManualControl() {
 }
 
 /**
- * Example 8: Multiple Actions in Header
- * 
+ * Example 7: Multiple Actions in Header
+ *
  * Combine AuthMenu with other action buttons
  */
-export function Example8_MultipleActions() {
+export function Example7_MultipleActions() {
 	return (
 		<Header
 			title="Dashboard"
@@ -179,11 +166,11 @@ export function Example8_MultipleActions() {
 }
 
 /**
- * Example 9: Protected Route Pattern
- * 
+ * Example 8: Protected Route Pattern
+ *
  * Show different UI based on authentication state
  */
-export function Example9_ProtectedRoute() {
+export function Example8_ProtectedRoute() {
 	const { user, loading } = useAuth()
 	const navigate = useNavigate()
 
@@ -208,23 +195,26 @@ export function Example9_ProtectedRoute() {
 			/>
 			<div className="p-6">
 				<p>Welcome, {user.name || user.email}!</p>
+				<button
+					onClick={() => navigate('/settings')}
+					className="btn-ghost mt-4"
+				>
+					Account settings
+				</button>
 			</div>
 		</div>
 	)
 }
 
 /**
- * Example 10: Custom Styling
- * 
+ * Example 9: Custom Styling
+ *
  * Wrap AuthMenu with custom styling
  */
-export function Example10_CustomStyling() {
+export function Example9_CustomStyling() {
 	return (
 		<div className="rounded-lg border border-primary p-1">
 			<AuthMenuConnected />
 		</div>
 	)
 }
-
-// Import React for Example 7
-import * as React from 'react'

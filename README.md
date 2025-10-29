@@ -1,6 +1,6 @@
 # Webapp Factory Template
 
-Monorepo starter for building SaaS-style products with a **React + Vite** frontend and a **FastAPI** backend. The repository is optimised for reuse: configuration is driven by JSON and shared packages, UI primitives live in a factory component library, and infrastructure scripts live alongside the code you ship.
+Monorepo starter for building SaaS-style products with a **React + Vite** frontend and a **FastAPI** backend. The repository is optimised for reuse: configuration is driven by JSON and shared packages, UI primitives live in a design-system component library, and infrastructure scripts live alongside the code you ship.
 
 ## Requirements
 
@@ -31,12 +31,12 @@ pnpm dev:api          # backend only (uvicorn)
 
 ## Frontend (apps/web)
 
-- `src/app/components/factory` is the reusable UI library. Every feature or page should compose these primitives rather than hand-rolling markup.
+- `src/app/components/design-system` is the reusable UI library. Every feature or page should compose these primitives rather than hand-rolling markup.
 - Layout helpers: `Page`, `Header`, `SidebarNav`, `BottomTabs`.
 - Controls: `Button`, `AuthMenu`, `OAuthButton`, form fields, modals, overlays.
 - Features belong in `src/app/features/<domain>` and must ship their own README plus configurable defaults where applicable.
 - Global theme state is managed by `ThemeProvider`, while runtime tokens (colours, radius, chart palettes) are applied by `AppConfigProvider`.
-- Example routes: `Home`, `Dashboard`, `StyleDemo`, and `features/auth/AuthDemo` demonstrate how to wire pages with factory components.
+- Example routes: `Home`, `Dashboard`, `StyleDemo`, and `features/auth/AuthDemo` demonstrate how to wire pages with design-system components.
 
 Useful scripts:
 
@@ -74,7 +74,7 @@ When you need functionality across apps, prefer creating a package here rather t
 - Everything is orchestrated by Turborepo (`turbo.json`). Scripts declared in the root `package.json` run across workspaces.
 - Use `pnpm dev` during feature work to run both stacks and keep them hot reloading.
 - Keep documentation nearby. Each feature should have a local README and, if configuration is required, a config file with sensible defaults.
-- Align UI changes with the factory library. If you need a component variant, extend the factory collection instead of bypassing it.
+- Align UI changes with the design-system library. If you need a component variant, extend the design-system collection instead of bypassing it.
 
 ## Next Steps
 

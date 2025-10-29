@@ -37,13 +37,11 @@ The Google auth UI is **already integrated** into both desktop and mobile layout
 
 ```
 App
-├── DesktopLayout (on desktop)
-│   └── Header
-│       └── AuthMenuConnected ✓
-│
-└── MobileLayout (on mobile)
-    └── TopBar
-        └── AuthMenuConnected ✓
+└── AppShell
+    ├── Topbar (built-in)
+    └── Main content
+        └── Header
+            └── AuthMenuConnected ✓
 ```
 
 ### State Management
@@ -60,18 +58,16 @@ App
 ## Files Created/Modified
 
 ### New Files
-- ✅ `apps/web/src/app/components/factory/navigation/AuthMenu.tsx`
-- ✅ `apps/web/src/app/components/factory/navigation/auth.config.ts`
-- ✅ `apps/web/src/app/components/factory/navigation/AuthMenu.examples.tsx`
-- ✅ `apps/web/src/app/components/factory/navigation/README.md`
+- ✅ `apps/web/src/app/components/design-system/navigation/AuthMenu.tsx`
+- ✅ `apps/web/src/app/components/design-system/navigation/auth.config.ts`
+- ✅ `apps/web/src/app/components/design-system/navigation/AuthMenu.examples.tsx`
+- ✅ `apps/web/src/app/components/design-system/navigation/README.md`
 - ✅ `apps/web/src/app/components/AuthMenuConnected.tsx`
 
 ### Modified Files
-- ✅ `apps/web/src/app/layouts/DesktopLayout.tsx` - Added AuthMenuConnected
-- ✅ `apps/web/src/app/layouts/MobileLayout.tsx` - Added AuthMenuConnected
-- ✅ `apps/web/src/app/components/TopBar.tsx` - Added AuthMenuConnected (deprecated wrapper)
-- ✅ `apps/web/src/app/components/factory/navigation.ts` - Added exports
-- ✅ `apps/web/src/app/components/factory/index.ts` - Added exports
+- ✅ `apps/web/src/app/App.tsx` - Wraps routes with `AppShell`
+- ✅ `apps/web/src/app/components/design-system/navigation.ts` - Added exports
+- ✅ `apps/web/src/app/components/design-system/index.ts` - Added exports
 
 ## Customization
 
@@ -113,7 +109,7 @@ function MyLayout() {
 Want to add auth to a specific page? Just use the `Header` component:
 
 ```tsx
-import { Header } from './components/factory'
+import { Header } from './components/design-system'
 import { AuthMenuConnected } from './components/AuthMenuConnected'
 
 function MyPage() {
@@ -176,8 +172,8 @@ function ProtectedPage() {
 
 ## Learn More
 
-- 📖 **Full Documentation**: See `apps/web/src/app/components/factory/navigation/README.md`
-- 💡 **Examples**: See `apps/web/src/app/components/factory/navigation/AuthMenu.examples.tsx`
+- 📖 **Full Documentation**: See `apps/web/src/app/components/design-system/navigation/README.md`
+- 💡 **Examples**: See `apps/web/src/app/components/design-system/navigation/AuthMenu.examples.tsx`
 - 🎨 **Component API**: See `AuthMenu.tsx` for all props and options
 - 🔧 **Configuration**: See `auth.config.ts` for customization options
 
@@ -186,7 +182,7 @@ function ProtectedPage() {
 If you run into issues:
 
 1. Check the README.md (comprehensive troubleshooting section)
-2. Look at the examples file (10 real-world scenarios)
+2. Look at the examples file (9 real-world scenarios)
 3. Review the implementation summary for architecture details
 
 ---

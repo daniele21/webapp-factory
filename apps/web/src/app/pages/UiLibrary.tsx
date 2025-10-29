@@ -37,7 +37,7 @@ import {
   type TableQuery,
   type TablePage,
   useToast,
-} from '../components/factory'
+} from '../components/design-system'
 import { Button } from '../components/ui/button'
 
 const formSchema = z.object({

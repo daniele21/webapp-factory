@@ -1,17 +1,13 @@
 import { Outlet } from 'react-router-dom'
-import { useIsDesktop } from './lib/responsive'
-import DesktopLayout from './layouts/DesktopLayout'
-import MobileLayout from './layouts/MobileLayout'
-import { ToastProvider } from './components/factory'
+import { AppShell, ToastProvider } from './components/design-system'
+import { AuthMenuConnected } from './components/AuthMenuConnected'
 
 export default function App() {
-  const isDesktop = useIsDesktop()
-  const Shell = isDesktop ? DesktopLayout : MobileLayout
   return (
     <ToastProvider>
-      <Shell>
+      <AppShell topbarActions={<AuthMenuConnected />}>
         <Outlet />
-      </Shell>
+      </AppShell>
     </ToastProvider>
   )
 }

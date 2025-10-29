@@ -9,11 +9,12 @@ export type PasswordFieldProps = React.InputHTMLAttributes<HTMLInputElement> & F
 export const PasswordField = ({ label, description, error, required, id, value, defaultValue, onChange, ...props }: PasswordFieldProps) => {
 	const [visible, setVisible] = useState(false)
 	const [internal, setInternal] = useState<string>(defaultValue?.toString() ?? '')
+	const generatedId = useId()
 	useEffect(() => {
 		if (typeof value === 'string') setInternal(value)
 	}, [value])
 	const current = typeof value === 'string' ? value : internal
-	const fieldId = id ?? useId()
+	const fieldId = id ?? generatedId
 	return (
 		<FieldShell label={label} description={description} error={error} required={required} labelFor={fieldId}>
 			<div className="relative">

@@ -1,6 +1,11 @@
-import { useTheme } from '../../theme/ThemeProvider'
+import type { ReactNode } from 'react'
+import { useTheme } from '../../../theme/ThemeProvider'
 
-export function Topbar() {
+export type TopbarProps = {
+  actions?: ReactNode
+}
+
+export function Topbar({ actions }: TopbarProps = {}) {
   const { mode, setMode, brand, visual, lockBrand, lockVisual } = useTheme()
 
   return (
@@ -63,25 +68,27 @@ export function Topbar() {
               3
             </span>
           </button>
-          <button
-            className="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-border
-                       focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]"
-            aria-label="Account"
-          >
-            <div className="h-full w-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm">
-              U
-            </div>
-          </button>
+          {actions ?? (
+            <button
+              className="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-border
+                         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]"
+              aria-label="Account"
+            >
+              <div className="h-full w-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm">
+                U
+              </div>
+            </button>
+          )}
         </div>
         {/* Theme debug (small, non-intrusive) */}
-        <div className="ml-3 hidden sm:flex items-center gap-2 text-[12px] text-muted">
+        {/* <div className="ml-3 hidden sm:flex items-center gap-2 text-[12px] text-muted">
           <span title="Theme mode">Mode: <strong className="ml-1">{mode}</strong></span>
           <span title="Brand id">Brand: <strong className="ml-1">{brand}</strong></span>
           <span title="Visual id">Visual: <strong className="ml-1">{visual}</strong></span>
           {lockBrand || lockVisual ? (
             <span className="ml-2 px-2 rounded bg-surface2 text-xs text-muted">Locked</span>
           ) : null}
-        </div>
+        </div> */}
       </div>
     </header>
   )

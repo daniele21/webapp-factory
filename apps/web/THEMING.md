@@ -122,7 +122,7 @@ The `AppShell` provides a responsive navigation structure with:
 ### Usage
 
 ```tsx
-import { AppShell } from './app/components/AppShell'
+import { AppShell } from './app/components/design-system'
 
 function App() {
   return (

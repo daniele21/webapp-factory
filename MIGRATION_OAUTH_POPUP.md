@@ -110,7 +110,7 @@ const login = () => {
 
 ```tsx
 // Import new component
-import { GoogleOAuthPopup } from '@/components/factory/auth'
+import { GoogleOAuthPopup } from '@/components/design-system/auth'
 
 // Usage
 <GoogleOAuthPopup 
@@ -132,7 +132,7 @@ If you want to keep using the `useAuth()` hook pattern:
 
 ```tsx
 // AuthProvider.tsx (updated)
-import { GoogleOAuthPopup } from '@/components/factory/auth'
+import { GoogleOAuthPopup } from '@/components/design-system/auth'
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -206,7 +206,7 @@ function Header() {
 }
 
 // After
-import { GoogleOAuthPopup } from '@/components/factory/auth'
+import { GoogleOAuthPopup } from '@/components/design-system/auth'
 
 function Header() {
   const handleSuccess = (user) => {
@@ -248,7 +248,7 @@ def test_oauth_exchange(client):
 
 ```tsx
 // Mock the GoogleOAuthPopup component
-jest.mock('@/components/factory/auth', () => ({
+jest.mock('@/components/design-system/auth', () => ({
   GoogleOAuthPopup: ({ children, onSuccess }) => (
     <div data-testid="google-oauth" onClick={() => onSuccess({ id: '1', email: 'test@example.com' })}>
       {children}
@@ -367,5 +367,5 @@ Before deploying to production:
 
 See:
 - [GOOGLE_OAUTH_SETUP.md](../../../api/GOOGLE_OAUTH_SETUP.md) - Complete setup guide
-- [auth/README.md](../../../web/src/app/components/factory/auth/README.md) - Component documentation
-- [GoogleOAuthPopup.examples.tsx](../../../web/src/app/components/factory/auth/GoogleOAuthPopup.examples.tsx) - Usage examples
+- [auth/README.md](../../../web/src/app/components/design-system/auth/README.md) - Component documentation
+- [GoogleOAuthPopup.examples.tsx](../../../web/src/app/components/design-system/auth/GoogleOAuthPopup.examples.tsx) - Usage examples

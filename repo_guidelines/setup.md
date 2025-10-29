@@ -400,84 +400,23 @@ export const routes = createRoutesFromElements(
 
 ```tsx
 import { Outlet } from 'react-router-dom'
-import { useIsDesktop } from './lib/responsive'
-import DesktopLayout from './layouts/DesktopLayout'
-import MobileLayout from './layouts/MobileLayout'
+import { AppShell, ToastProvider } from './components/design-system'
+import { AuthMenuConnected } from './components/AuthMenuConnected'
 
 export default function App() {
-  const isDesktop = useIsDesktop()
-  const Shell = isDesktop ? DesktopLayout : MobileLayout
   return (
-    <Shell>
-      <Outlet />
-    </Shell>
+    <ToastProvider>
+      <AppShell topbarActions={<AuthMenuConnected />}>
+        <Outlet />
+      </AppShell>
+    </ToastProvider>
   )
 }
 ```
 
-### `apps/web/src/app/layouts/DesktopLayout.tsx`
-
-```tsx
-import NavSidebar from '../components/NavSidebar'
-import Footer from '../components/Footer'
-
-export default function DesktopLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen grid grid-cols-[260px_1fr] grid-rows-[auto_1fr_auto]">
-      <aside className="row-span-3 border-r"><NavSidebar /></aside>
-      <header className="p-4 border-b">Webapp Factory</header>
-      <main className="p-6">{children}</main>
-      <footer className="col-start-2"><Footer /></footer>
-    </div>
-  )
-}
-```
-
-### `apps/web/src/app/layouts/MobileLayout.tsx`
-
-```tsx
-import TopBar from '../components/TopBar'
-import BottomNav from '../components/BottomNav'
-
-export default function MobileLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
-      <TopBar />
-      <main className="p-4">{children}</main>
-      <BottomNav />
-    </div>
-  )
-}
-```
-
-### `apps/web/src/app/components/NavSidebar.tsx`
-
-```tsx
-import { Link, useLocation } from 'react-router-dom'
-import { features } from '../../lib/featureFlags'
-
-const nav = [
-  { to: '/', label: 'Home' },
-  { to: '/dashboard', label: 'Dashboard', feature: 'dashboard.view' as const }
-]
-
-export default function NavSidebar() {
-  const { pathname } = useLocation()
-  return (
-    <nav className="p-4 space-y-2">
-      {nav.map((item) => {
-        if (item.feature && !features[item.feature]?.enabled) return null
-        const active = pathname === item.to
-        return (
-          <Link key={item.to} className={active ? 'font-semibold' : ''} to={item.to}>
-            {item.label}
-          </Link>
-        )
-      })}
-    </nav>
-  )
-}
-```
+The shared `AppShell` component provides the responsive sidebar, top bar, and mobile tabs
+out of the box, so the application no longer needs bespoke desktop or mobile layout
+wrappers.
 
 ### `apps/web/src/app/providers/AuthProvider.tsx`
 

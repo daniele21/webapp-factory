@@ -1,5 +1,5 @@
 import React from 'react'
-import { FactoryForm, TextField, PasswordField } from '../../components/factory'
+import { FactoryForm, TextField, PasswordField } from '../../components/design-system'
 
 export const RegisterForm = ({ onSubmit }: { onSubmit?: (vals: any) => void }) => {
   return (

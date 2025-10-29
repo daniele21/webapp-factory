@@ -20,7 +20,7 @@ pip install cryptography
 
 ### 3. Frontend Usage
 ```tsx
-import { GoogleOAuthPopup } from '@/components/factory/auth'
+import { GoogleOAuthPopup } from '@/components/design-system/auth'
 
 <GoogleOAuthPopup 
   onSuccess={(user) => console.log('Logged in:', user)}
@@ -228,8 +228,8 @@ APP_JWT_ACCESS_TOKEN_EXPIRE_MINUTES=60
 ## 📖 Full Documentation
 
 - **Setup Guide:** `apps/api/GOOGLE_OAUTH_SETUP.md`
-- **Component Docs:** `apps/web/src/app/components/factory/auth/README.md`
-- **Examples:** `apps/web/src/app/components/factory/auth/GoogleOAuthPopup.examples.tsx`
+- **Component Docs:** `apps/web/src/app/components/design-system/auth/README.md`
+- **Examples:** `apps/web/src/app/components/design-system/auth/GoogleOAuthPopup.examples.tsx`
 - **Migration Guide:** `MIGRATION_OAUTH_POPUP.md`
 - **Implementation Details:** `OAUTH_POPUP_IMPLEMENTATION.md`
 

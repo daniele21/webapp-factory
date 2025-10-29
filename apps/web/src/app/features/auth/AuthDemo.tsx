@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { startGoogleLogin, fetchMe, logout } from './authService'
-import { OAuthButton, Button } from '../../components/factory'
+import { OAuthButton, Button } from '../../components/design-system'
 
 const AuthDemo = () => {
   const [user, setUser] = useState<any>(null)

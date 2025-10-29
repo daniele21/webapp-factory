@@ -144,24 +144,21 @@ apps/web/src/app/
 │
 ├── components/
 │   ├── AuthMenuConnected.tsx         ← Connected wrapper
-│   │
-│   ├── factory/
-│   │   ├── navigation/
-│   │   │   ├── AuthMenu.tsx          ← Main component ⭐
-│   │   │   ├── AuthMenu.examples.tsx ← Usage examples
-│   │   │   ├── auth.config.ts        ← Configuration
-│   │   │   ├── README.md             ← Documentation
-│   │   │   ├── QUICK_START.md        ← Quick guide
-│   │   │   └── IMPLEMENTATION_SUMMARY.md
-│   │   │
-│   │   ├── navigation.ts             ← Barrel export
-│   │   └── index.ts                  ← Main export
-│   │
-│   └── TopBar.tsx                    ← App-specific wrapper
+│   └── design-system/
+│       ├── navigation/
+│       │   ├── AuthMenu.tsx          ← Main component ⭐
+│       │   ├── AuthMenu.examples.tsx ← Usage examples
+│       │   ├── auth.config.ts        ← Configuration
+│       │   ├── README.md             ← Documentation
+│       │   ├── QUICK_START.md        ← Quick guide
+│       │   └── IMPLEMENTATION_SUMMARY.md
+│       │
+│       ├── navigation.ts             ← Barrel export
+│       ├── index.ts                  ← Main export
+│       └── app-shell/
+│           └── AppShell.tsx          ← Shared layout frame
 │
-└── layouts/
-    ├── DesktopLayout.tsx             ← Desktop integration
-    └── MobileLayout.tsx              ← Mobile integration
+└── App.tsx                          ← Wraps routes with AppShell
 ```
 
 ## State Management Pattern
@@ -242,14 +239,11 @@ Application Entry
        │     └─ <AuthProvider>        ← Wraps entire app
        │
        ├─── App.tsx
-       │     └─ Chooses layout (Desktop/Mobile)
+       │     └─ <AppShell topbarActions={<AuthMenuConnected />}>
+       │            └─ <Outlet />
        │
-       ├─── DesktopLayout.tsx
-       │     └─ <AuthMenuConnected />  ← In header
-       │
-       └─── MobileLayout.tsx
-             └─ <TopBar>
-                  └─ <AuthMenuConnected />  ← In actions
+       └─── Pages (e.g. Dashboard)
+             └─ <Header actions={<AuthMenuConnected />} />
 ```
 
 ## Why This Architecture?

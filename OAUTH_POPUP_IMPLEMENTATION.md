@@ -54,23 +54,23 @@ Successfully implemented a secure Google OAuth authentication system using **Goo
 
 ### Frontend (React/TypeScript)
 
-4. **`apps/web/src/app/components/factory/auth/GoogleOAuthPopup.tsx`** (305 lines)
+4. **`apps/web/src/app/components/design-system/auth/GoogleOAuthPopup.tsx`** (305 lines)
    - Main OAuth popup component
    - GIS script loading and initialization
    - Authorization code flow handling
    - CSRF state token generation
    - Error handling
 
-5. **`apps/web/src/app/components/factory/auth/GoogleOAuthConfig.ts`** (40 lines)
+5. **`apps/web/src/app/components/design-system/auth/GoogleOAuthConfig.ts`** (40 lines)
    - Configuration interface and defaults
    - Helper for custom configuration
 
-6. **`apps/web/src/app/components/factory/auth/GoogleOAuthPopup.examples.tsx`** (330 lines)
+6. **`apps/web/src/app/components/design-system/auth/GoogleOAuthPopup.examples.tsx`** (330 lines)
    - 8 complete usage examples
    - Basic to advanced patterns
    - Integration examples
 
-7. **`apps/web/src/app/components/factory/auth/index.ts`** (8 lines)
+7. **`apps/web/src/app/components/design-system/auth/index.ts`** (8 lines)
    - Barrel export for auth components
 
 ### Documentation
@@ -82,7 +82,7 @@ Successfully implemented a secure Google OAuth authentication system using **Goo
    - Troubleshooting guide
    - API reference
 
-9. **`apps/web/src/app/components/factory/auth/README.md`** (380 lines)
+9. **`apps/web/src/app/components/design-system/auth/README.md`** (380 lines)
    - Component documentation
    - Usage examples
    - Security explanation
@@ -107,7 +107,7 @@ Successfully implemented a secure Google OAuth authentication system using **Goo
     - Updated logout to revoke tokens
     - Maintained backward compatibility
 
-13. **`apps/web/src/app/components/factory/index.ts`**
+13. **`apps/web/src/app/components/design-system/index.ts`**
     - Exported GoogleOAuthPopup component
     - Exported auth barrel
 
@@ -148,7 +148,7 @@ Successfully implemented a secure Google OAuth authentication system using **Goo
 
 1. **Use the component:**
    ```tsx
-   import { GoogleOAuthPopup } from '@/components/factory/auth'
+   import { GoogleOAuthPopup } from '@/components/design-system/auth'
 
    <GoogleOAuthPopup 
      onSuccess={(user) => console.log('Logged in:', user)}

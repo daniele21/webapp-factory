@@ -1,8 +1,14 @@
+import type { ReactNode } from 'react'
 import { Topbar } from './Topbar'
 import { Sidebar } from './Sidebar'
 import { MobileTabs } from './MobileTabs'
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+export type AppShellProps = {
+  children: ReactNode
+  topbarActions?: ReactNode
+}
+
+export function AppShell({ children, topbarActions }: AppShellProps) {
   return (
     <div className="min-h-dvh bg-bg text-text">
       {/* Skip to content link for accessibility */}
@@ -15,7 +21,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         Skip to content
       </a>
 
-      <Topbar />
+      <Topbar actions={topbarActions} />
 
       <div className="flex">
         {/* Desktop sidebar */}

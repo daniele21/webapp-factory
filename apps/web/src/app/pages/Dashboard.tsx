@@ -1,5 +1,5 @@
 import ChartApex from '../components/ChartApex'
-import { Page, Card } from '../components/factory'
+import { Page, Card } from '../components/design-system'
 
 export default function Dashboard() {
   const series = [

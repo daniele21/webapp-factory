@@ -142,7 +142,7 @@ uvicorn main:app --reload --port 8000
 ### Basic Example
 
 ```tsx
-import { GoogleOAuthPopup } from '@/components/factory/auth/GoogleOAuthPopup'
+import { GoogleOAuthPopup } from '@/components/design-system/auth/GoogleOAuthPopup'
 
 function LoginPage() {
   const handleSuccess = (user) => {
@@ -171,7 +171,7 @@ function LoginPage() {
 
 ```tsx
 import { useAuth } from '@/providers/AuthProvider'
-import { GoogleOAuthPopup } from '@/components/factory/auth/GoogleOAuthPopup'
+import { GoogleOAuthPopup } from '@/components/design-system/auth/GoogleOAuthPopup'
 
 function Header() {
   const { user, logout } = useAuth()
@@ -696,4 +696,4 @@ The JWT token includes:
 - **Google OAuth Docs**: https://developers.google.com/identity/protocols/oauth2
 - **FastAPI OAuth**: https://fastapi.tiangolo.com/advanced/security/
 - **Backend Auth README**: `apps/api/auth/README.md`
-- **Frontend Auth README**: `apps/web/src/app/components/factory/navigation/README.md`
+- **Frontend Auth README**: `apps/web/src/app/components/design-system/navigation/README.md`

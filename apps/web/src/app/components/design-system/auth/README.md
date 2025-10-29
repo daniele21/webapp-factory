@@ -29,7 +29,7 @@ Quick checklist:
 ### 2. Frontend Setup
 
 ```tsx
-import { GoogleOAuthPopup } from '@/components/factory/auth'
+import { GoogleOAuthPopup } from '@/components/design-system/auth'
 
 function LoginPage() {
   const handleSuccess = (user) => {
@@ -142,7 +142,7 @@ See [GoogleOAuthPopup.examples.tsx](./GoogleOAuthPopup.examples.tsx) for complet
 Customize OAuth behavior:
 
 ```typescript
-import { createGoogleOAuthConfig } from '@/components/factory/auth'
+import { createGoogleOAuthConfig } from '@/components/design-system/auth'
 
 const config = createGoogleOAuthConfig({
   apiBaseUrl: '/api',

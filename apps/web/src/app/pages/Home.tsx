@@ -1,7 +1,7 @@
 import { useAuth } from '../providers/AuthProvider'
 import { useNavigate } from 'react-router-dom'
 import { useMemo } from 'react'
-import { Page, Card, Button, Skeleton, OAuthButton } from '../components/factory'
+import { Page, Card, Button, Skeleton, OAuthButton } from '../components/design-system'
 import { useAppConfig } from '@config/src/provider'
 
 export default function Home() {

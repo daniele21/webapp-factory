@@ -20,7 +20,7 @@ A fully-featured authentication menu component that displays different UI based 
 **Basic Usage (with AuthProvider):**
 
 ```tsx
-import { Header } from './components/factory'
+import { Header } from './components/design-system'
 import { AuthMenuConnected } from './components/AuthMenuConnected'
 
 function MyPage() {
@@ -36,7 +36,7 @@ function MyPage() {
 **Manual Usage (without AuthProvider):**
 
 ```tsx
-import { AuthMenu } from './components/factory'
+import { AuthMenu } from './components/design-system'
 
 function MyCustomHeader() {
   const [user, setUser] = useState(null)
@@ -111,26 +111,26 @@ import { AuthMenuConnected } from './components/AuthMenuConnected'
 
 ## Integration Patterns
 
-### 1. In the TopBar (App-wide)
+### 1. Inside the AppShell frame
 
-The recommended approach for most applications:
+Embed the auth menu inside the shared `AppShell` to keep navigation consistent:
 
 ```tsx
-// apps/web/src/app/components/TopBar.tsx
-import { ThemeSwitch } from './ThemeSwitch'
-import { AuthMenuConnected } from './AuthMenuConnected'
+import { AppShell, Header } from './components/design-system'
+import { AuthMenuConnected } from './components/AuthMenuConnected'
 
-export default function TopBar({ onOpenNav }: Props) {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-border p-3">
-      <div className="flex items-center gap-3 w-full">
-        <h1>Webapp Factory</h1>
-        <div className="ml-auto flex items-center gap-3">
-          <ThemeSwitch />
-          <AuthMenuConnected />
-        </div>
+    <AppShell>
+      <div className="space-y-6">
+        <Header
+          title="Webapp Factory"
+          subtitle="Build faster, ship better"
+          actions={<AuthMenuConnected />}
+        />
+        <div>{children}</div>
       </div>
-    </header>
+    </AppShell>
   )
 }
 ```
@@ -140,7 +140,7 @@ export default function TopBar({ onOpenNav }: Props) {
 For page-specific authentication UI:
 
 ```tsx
-import { Header } from './components/factory'
+import { Header } from './components/design-system'
 import { AuthMenuConnected } from './components/AuthMenuConnected'
 
 function DashboardPage() {
@@ -159,38 +159,13 @@ function DashboardPage() {
 }
 ```
 
-### 3. In AppShell
-
-For a consistent layout across all pages:
-
-```tsx
-import { AppShell, Header } from './components/factory'
-import { AuthMenuConnected } from './components/AuthMenuConnected'
-
-function Layout({ children }) {
-  return (
-    <AppShell
-      header={
-        <Header
-          title="Webapp Factory"
-          actions={<AuthMenuConnected />}
-        />
-      }
-      sidebar={<MySidebar />}
-    >
-      {children}
-    </AppShell>
-  )
-}
-```
-
-### 4. Custom Implementation
+### 3. Custom Implementation
 
 For complete control over the UI:
 
 ```tsx
 import { useAuth } from './providers/AuthProvider'
-import { Avatar } from './components/factory'
+import { Avatar } from './components/design-system'
 import { Button } from './components/ui/button'
 
 function CustomAuthUI() {
@@ -245,7 +220,7 @@ Example:
 
 ```tsx
 import { useAuth } from './providers/AuthProvider'
-import { Popover } from './components/factory'
+import { Popover } from './components/design-system'
 
 function CustomUserMenu() {
   const { user, logout } = useAuth()
@@ -390,7 +365,7 @@ function AppHeader() {
 ## Best Practices
 
 1. **Use AuthMenuConnected** - It automatically connects to the AuthProvider
-2. **Place in TopBar or Header** - Consistent placement improves UX
+2. **Embed in AppShell or Header** - Keep placement consistent across the app
 3. **Handle loading states** - The component handles this, but test it
 4. **Test logout flow** - Ensure state clears correctly
 5. **Mobile responsiveness** - The component is mobile-friendly by default
@@ -400,7 +375,7 @@ function AppHeader() {
 - `AuthProvider` - Context provider for auth state
 - `OAuthButton` - Standalone OAuth login button
 - `Header` - Factory header component with actions support
-- `TopBar` - Mobile-friendly top navigation bar
+- `AppShell` - Opinionated shell with built-in top bar
 - `Avatar` - User avatar component
 
 ## Future Enhancements

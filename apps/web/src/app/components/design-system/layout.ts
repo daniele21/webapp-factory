@@ -1,20 +1,12 @@
-// Barrel for factory layout components
-export { AppShell } from './layout/AppShell'
+// Barrel for design-system layout components
 export { Header } from './layout/Header'
 export { SidebarNav } from './layout/SidebarNav'
-export { BottomTabs } from './layout/BottomTabs'
 export { Breadcrumbs } from './layout/Breadcrumbs'
 export { Footer } from './layout/Footer'
 export { Page } from './layout/Page'
-export { TopBar } from './layout/TopBar'
-export { DrawerNav } from './layout/DrawerNav'
 
-export { default as AppShellDefault } from './layout/AppShell'
 export { default as HeaderDefault } from './layout/Header'
 export { default as SidebarNavDefault } from './layout/SidebarNav'
-export { default as BottomTabsDefault } from './layout/BottomTabs'
 export { default as BreadcrumbsDefault } from './layout/Breadcrumbs'
 export { default as FooterDefault } from './layout/Footer'
 export { default as PageDefault } from './layout/Page'
-export { default as TopBarDefault } from './layout/TopBar'
-export { default as DrawerNavDefault } from './layout/DrawerNav'

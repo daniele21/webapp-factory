@@ -6,7 +6,8 @@ import { FieldShell, inputClasses } from './fieldShell'
 export type TextFieldProps = React.InputHTMLAttributes<HTMLInputElement> & FieldCommon
 
 export const TextField = ({ label, description, error, required, maxLength, value, defaultValue, onChange, id, ...props }: TextFieldProps) => {
-	const fieldId = id ?? useId()
+	const generatedId = useId()
+	const fieldId = id ?? generatedId
 	const [internal, setInternal] = useState<string>(defaultValue?.toString() ?? '')
 	useEffect(() => {
 		if (typeof value === 'string') setInternal(value)

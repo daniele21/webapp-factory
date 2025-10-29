@@ -227,7 +227,7 @@ Create a login page with multiple options:
 
 ```tsx
 import { useAuth } from './providers/AuthProvider'
-import { OAuthButton } from './components/factory'
+import { OAuthButton } from './components/design-system'
 
 function LoginPage() {
   const { login, loading } = useAuth()

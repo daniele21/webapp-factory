@@ -1,4 +1,4 @@
-import { AuthMenu } from '../components/factory'
+import { AuthMenu } from '../components/design-system'
 import { useAuth } from '../providers/AuthProvider'
 import type { ComponentProps } from 'react'
 
@@ -10,7 +10,7 @@ import type { ComponentProps } from 'react'
  * 
  * @example
  * ```tsx
- * import { Header } from '../components/factory'
+ * import { Header } from '../components/design-system'
  * import { AuthMenuConnected } from '../components/AuthMenuConnected'
  * 
  * function MyPage() {

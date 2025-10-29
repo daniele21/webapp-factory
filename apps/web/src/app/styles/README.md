@@ -161,7 +161,7 @@ export const Modal = ({ children }) => (
 Use the `StyleShowcase` component to test how your components adapt:
 
 ```tsx
-import { StyleShowcase } from './components/factory'
+import { StyleShowcase } from './components/design-system'
 
 // In your demo/development page
 <StyleShowcase />
