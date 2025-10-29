@@ -23,8 +23,9 @@ export default defineConfig({
           { src: '/icons/logo-512.png', sizes: '512x512', type: 'image/png' }
         ]
       },
-      injectRegister: 'auto',
-      devOptions: { enabled: true }
+  injectRegister: 'auto',
+  // Ensure dev service worker is treated as an ES module since our `sw.ts` uses imports
+  devOptions: { enabled: true, type: 'module' }
     })
   ],
   // Bind dev server to IPv4 loopback explicitly to avoid 'localhost' resolving

@@ -15,15 +15,18 @@ from ..services.user_service import UserNotFoundError, handle_service_error
 router = APIRouter()
 
 
-@router.get(
-    "/",
-    response_model=UserListResponse,
-    dependencies=[Depends(require_roles("admin"))],
-)
+@router.get("/", response_model=UserListResponse)
 async def list_users(
     limit: int = Query(25, ge=1, le=100, description="Number of users to return (max 100)"),
     cursor: str | None = Query(None, description="Document ID to resume pagination from"),
+    claims: AuthClaims = Depends(auth_required),
 ):
+    """Admins get full list; everyone else receives their own profile in a list."""
+    is_admin = any(role.lower() == "admin" for role in (claims.roles or []))
+    if not is_admin:
+        profile = await user_service.get_user_by_id(claims.sub)
+        return UserListResponse(items=[profile] if profile else [], next_cursor=None)
+
     items, next_cursor = await user_service.list_users(limit=limit, cursor=cursor)
     return UserListResponse(items=items, next_cursor=next_cursor)
 
