@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { LogOut, User, Settings, ChevronDown } from 'lucide-react'
+import { LogOut, User, Settings, ChevronDown, Loader2 } from 'lucide-react'
 import { Avatar } from '../primitives/Avatar'
 import { Popover } from '../overlays/Popover'
 import { OAuthButton, type AuthProviderId } from './OAuthButton'
@@ -11,6 +11,8 @@ export type AuthUser = {
 	name?: string
 	picture?: string
 	roles?: string[]
+	provider?: string
+	plan?: string
 }
 
 export type AuthMenuProps = {
@@ -75,6 +77,18 @@ export function AuthMenu({
 	const shouldShowSettings = showSettings ?? authMenuConfig?.showSettings ?? true
 	const [loggingOut, setLoggingOut] = useState(false)
 
+	// Loading state placeholder
+	if (loading && !user) {
+		return (
+			<span
+				className="inline-flex h-9 w-[92px] animate-pulse items-center justify-center rounded-full bg-muted/60 text-xs text-muted-fg"
+				aria-live="polite"
+			>
+				Loading…
+			</span>
+		)
+	}
+
 	// Not authenticated - show login button
 	if (!user) {
 		return (
@@ -108,7 +122,7 @@ export function AuthMenu({
 		<Popover
 			trigger={
 				<button
-					className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-sm hover:bg-card/80 focus:outline-none focus:ring-2 focus:ring-primary/50"
+					className="group flex items-center gap-2 rounded-full border border-border/60 bg-card px-3 py-2 text-sm shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 hover:border-border hover:bg-card/90"
 					aria-label="User menu"
 				>
 					<Avatar
@@ -116,34 +130,47 @@ export function AuthMenu({
 						fallback={initials}
 						size={28}
 					/>
-					<span className="hidden sm:inline font-medium">{displayName}</span>
-					<ChevronDown className="h-4 w-4 text-muted-fg" aria-hidden="true" />
+					<div className="flex flex-col items-start">
+						<span className="font-medium leading-none">{displayName}</span>
+						<span className="text-[11px] uppercase tracking-wide text-muted-fg/80">
+							{user.roles?.[0] ?? 'Member'}
+						</span>
+					</div>
+					<ChevronDown className="hidden sm:block h-4 w-4 text-muted-fg transition group-hover:translate-y-[1px]" aria-hidden="true" />
 				</button>
 			}
 		>
-			<div className="min-w-[200px] space-y-1">
-				{/* User info section */}
-				<div className="border-b border-border pb-2 mb-2">
-					<p className="text-sm font-semibold text-fg">{displayName}</p>
-					<p className="text-xs text-muted-fg">{user.email}</p>
-					{user.roles && user.roles.length > 0 && (
-						<div className="mt-1 flex flex-wrap gap-1">
-							{user.roles.map((role) => (
-								<span
-									key={role}
-									className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary"
-								>
-									{role}
-								</span>
-							))}
+			<div className="min-w-[220px] space-y-2 rounded-xl border border-border/60 bg-bg/95 p-2 shadow-lg backdrop-blur">
+				{/* Name and email (compact) */}
+				<div className="rounded-md px-2 py-2">
+					<div className="flex items-center gap-2">
+						<Avatar src={user.picture} fallback={initials} size={36} />
+						<div className="flex flex-col min-w-0">
+							<span className="text-sm font-medium text-fg truncate">{displayName}</span>
+							<span className="text-xs text-muted-fg/80 truncate">{user.email}</span>
 						</div>
+					</div>
+				</div>
+
+				{/* Role and Plan on same compact row */}
+				<div className="flex items-center justify-end gap-2 px-2">
+					{(user.roles && user.roles.length > 0) && (
+						<span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-primary">
+							{user.roles[0]}
+						</span>
+					)}
+					{user.plan && (
+						<span className="inline-flex items-center rounded-full bg-primary/5 px-2 py-0.5 text-[11px] font-medium text-primary">
+							{user.plan}
+						</span>
 					)}
 				</div>
 
 				{/* Menu items */}
 				<div className="space-y-1">
 					<button
-						className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-bg/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+						type="button"
+						className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
 						onClick={() => {/* Navigate to profile or handle profile action */}}
 						aria-label="View profile"
 					>
@@ -153,7 +180,8 @@ export function AuthMenu({
 
 					{shouldShowSettings && (
 						<button
-							className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-bg/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+							type="button"
+							className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
 							onClick={onSettingsClick}
 							aria-label="Settings"
 						>
@@ -162,15 +190,20 @@ export function AuthMenu({
 						</button>
 					)}
 
-					<div className="border-t border-border pt-1 mt-1">
+					<div className="border-t border-border/70 pt-2 mt-2">
 						<button
-							className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-error hover:bg-error/5 focus:outline-none focus:ring-2 focus:ring-error/50 disabled:opacity-50"
+							type="button"
+							className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-error transition hover:bg-error/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/40 disabled:opacity-60"
 							onClick={handleLogout}
 							disabled={loggingOut}
 							aria-label="Sign out"
 						>
-							<LogOut className="h-4 w-4" aria-hidden="true" />
-							<span>{loggingOut ? 'Signing out...' : 'Sign out'}</span>
+							{loggingOut ? (
+								<Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+							) : (
+								<LogOut className="h-4 w-4" aria-hidden="true" />
+							)}
+							<span>{loggingOut ? 'Signing out…' : 'Sign out'}</span>
 						</button>
 					</div>
 				</div>
