@@ -39,6 +39,7 @@ import {
   useToast,
 } from '../components/design-system'
 import { Button } from '../components/ui/button'
+import { requestCookiePreferences } from '@/lib/cookieConsentEvents'
 
 const formSchema = z.object({
   fullName: z.string().min(2),
@@ -176,6 +177,37 @@ export default function UiLibrary() {
           primaryAction={<Button onClick={() => notify({ title: 'Pretend alert', intent: 'info', description: 'Sample toast' })}>Trigger toast</Button>}
           secondaryAction={<Button variant="outline">Create rule</Button>}
         />
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold">Account & privacy</h2>
+        <Card
+          title="Cookie preferences"
+          description="Review how we use cookies and adjust optional categories."
+        >
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <p className="text-sm text-muted-fg">
+              We always enable strictly necessary cookies. Manage analytics and marketing consent below.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  if (typeof window !== 'undefined') window.location.assign('/legal/cookies')
+                }}
+              >
+                View policy
+              </Button>
+              <Button
+                type="button"
+                onClick={requestCookiePreferences}
+              >
+                Manage cookies
+              </Button>
+            </div>
+          </div>
+        </Card>
       </section>
 
       <section className="space-y-6">

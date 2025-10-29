@@ -104,5 +104,14 @@
         { "id": "google", "label": "Google Login" }
       ]
     }
+  },
+  "cookies": {
+    "categories": [
+      { "id": "necessary", "label": "Strictly necessary", "description": "Required for core functionality", "isEssential": true },
+      { "id": "preferences", "label": "Preferences", "description": "Remember display & language settings" },
+      { "id": "statistics", "label": "Statistics", "description": "Anonymous site analytics (e.g. GA)" },
+      { "id": "marketing", "label": "Marketing", "description": "Personalised ads and tracking" }
+    ],
+    "default": ["necessary"]
   }
 }

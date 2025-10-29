@@ -4,6 +4,8 @@ import { Sidebar } from './Sidebar'
 import { MobileTabs } from './MobileTabs'
 import type { AppShellNavItem } from './navItems'
 import { DEFAULT_NAV_ITEMS } from './navItems'
+import { Footer } from '../layout/Footer'
+import { requestCookiePreferences } from '@/lib/cookieConsentEvents'
 
 export type AppShellProps = {
   children: ReactNode
@@ -13,6 +15,7 @@ export type AppShellProps = {
 
 export function AppShell({ children, topbarActions, navItems }: AppShellProps) {
   const items = navItems ?? DEFAULT_NAV_ITEMS
+  const year = new Date().getFullYear()
 
   return (
     <div className="min-h-dvh bg-bg text-text">
@@ -35,6 +38,27 @@ export function AppShell({ children, topbarActions, navItems }: AppShellProps) {
           {children}
         </main>
       </div>
+
+      <Footer className="border-t border-border bg-surface1/80 text-muted-fg">
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 text-sm md:flex-row md:items-center md:justify-between">
+          <span>© {year} Webapp Factory</span>
+          <div className="flex flex-wrap items-center gap-3">
+            <a href="/legal/cookies" className="transition hover:text-text hover:underline">
+              Cookie policy
+            </a>
+            <a href="/legal/terms" className="transition hover:text-text hover:underline">
+              Terms
+            </a>
+            <button
+              type="button"
+              onClick={requestCookiePreferences}
+              className="transition hover:text-text hover:underline"
+            >
+              Manage cookies
+            </button>
+          </div>
+        </div>
+      </Footer>
 
       {/* Mobile bottom tabs */}
       <MobileTabs className="md:hidden" items={items} />

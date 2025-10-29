@@ -80,3 +80,4 @@ secrets.*
 
 .devcontainer
 .github
+*coverage.xml

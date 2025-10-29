@@ -24,6 +24,13 @@ const authProvider = z.object({
   label: z.string().optional(),
 })
 
+const cookieCategory = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string().optional(),
+  isEssential: z.boolean().optional(),
+})
+
 export const AppConfigSchema = z.object({
   brand: z.object({
     name: z.string(),
@@ -83,6 +90,17 @@ export const AppConfigSchema = z.object({
       providers: [{ id: 'google' }],
     },
   }),
+  cookies: z
+    .object({
+      categories: z.array(cookieCategory),
+      default: z.array(z.string()).default(['necessary']),
+    })
+    .optional(),
+  analytics: z
+    .object({
+      googleAnalyticsId: z.string().optional(),
+    })
+    .optional(),
 })
 
 export type AppConfig = z.infer<typeof AppConfigSchema>

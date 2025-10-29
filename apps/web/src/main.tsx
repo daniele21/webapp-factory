@@ -7,10 +7,9 @@ import { QueryProvider } from './app/providers/QueryProvider'
 import { ThemeProvider } from './app/theme/ThemeProvider'
 import { AppConfigProvider } from '@config/src/provider'
 import './app/styles/index.css'
-import { initAnalytics, trackRouteChange } from './app/lib/analytics'
+import { trackRouteChange } from './app/lib/analytics'
 import { useTheme } from './app/theme/ThemeProvider'
 
-initAnalytics()
 const router = createBrowserRouter(routes)
 router.subscribe((state) => trackRouteChange(state.location))
 
