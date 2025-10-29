@@ -38,7 +38,7 @@
       "chartGrid": "220 12% 24%",
       "chartAxis": "220 15% 62%"
     },
-  "defaultBrand": "sunset",
+  "defaultBrand": "forest",
   "defaultVisual": "finance",
   "lockBrand": true,
   "lockVisual": true,
@@ -93,6 +93,13 @@
   ],
   "features": {
     "nprogress": true
+  },
+  "analytics": {
+    "enabled": true,
+    "googleAnalyticsId": "G-XXXXXXXXXX",
+    "googleAnalyticsConfig": {
+      "anonymize_ip": true
+    }
   },
   "components": {
     "authMenu": {

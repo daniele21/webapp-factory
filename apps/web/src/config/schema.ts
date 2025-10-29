@@ -99,6 +99,8 @@ export const AppConfigSchema = z.object({
   analytics: z
     .object({
       googleAnalyticsId: z.string().optional(),
+      enabled: z.boolean().optional(),
+      googleAnalyticsConfig: z.record(z.unknown()).optional(),
     })
     .optional(),
 })

@@ -20,10 +20,21 @@ export function useLoadAnalytics() {
 
 	useEffect(() => {
 		if (typeof document === 'undefined' || typeof window === 'undefined') return
-		if (!consent.statistics) return
+		const analyticsCfg = cfg?.analytics
+		const isEnabled = analyticsCfg?.enabled ?? true
+		if (!consent.statistics || !isEnabled) {
+			if (window.__wfAnalyticsLoaded) {
+				document.getElementById(SCRIPT_ID)?.remove()
+				document.getElementById(INLINE_ID)?.remove()
+				window.__wfAnalyticsLoaded = false
+				window.dataLayer = undefined
+				window.gtag = undefined
+			}
+			return
+		}
 
 		const gaId =
-			cfg?.analytics?.googleAnalyticsId ||
+			analyticsCfg?.googleAnalyticsId ||
 			(import.meta.env as Record<string, string | undefined>).VITE_PUBLIC_ANALYTICS_KEY
 		if (!gaId) return
 
@@ -36,11 +47,14 @@ export function useLoadAnalytics() {
 
 		const inline = document.createElement('script')
 		inline.id = INLINE_ID
+		const configPayload = analyticsCfg?.googleAnalyticsConfig
+			? `, ${JSON.stringify(analyticsCfg.googleAnalyticsConfig)}`
+			: ''
 		inline.innerHTML = `
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', '${gaId}');
+gtag('config', '${gaId}'${configPayload});
 `.trim()
 
 		document.head.appendChild(script)
@@ -58,6 +72,8 @@ gtag('config', '${gaId}');
 			document.getElementById(SCRIPT_ID)?.remove()
 			document.getElementById(INLINE_ID)?.remove()
 			window.__wfAnalyticsLoaded = false
+			window.dataLayer = undefined
+			window.gtag = undefined
 		}
 	}, [cfg, consent.statistics])
 }

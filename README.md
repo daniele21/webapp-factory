@@ -28,6 +28,7 @@ pnpm dev:api          # backend only (uvicorn)
 - Frontend runtime settings live in `apps/web/public/app.config.json`. This file drives navigation, layout toggles, theming tokens, and component options such as the auth menu.
 - Type-safe access is provided by `AppConfigProvider` from `@config/src/provider`. Wrap your app once (already done in `apps/web/src/main.tsx`) and call `useAppConfig()` inside components.
 - Updating the JSON file does **not** require a rebuild; the provider fetches it on load and falls back to a sane default when parsing fails.
+- Google Analytics loads only when the `statistics` consent bucket is accepted. Provide a measurement ID and optional config flags under the `analytics` key in `app.config.json`, or switch it off entirely with `"enabled": false`.
 
 ## Frontend (apps/web)
 
