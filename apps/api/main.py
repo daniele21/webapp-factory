@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.settings import settings
-from api.routes import health, auth, users, protected, google_auth
+from api.routes import health, auth, users, protected, google_auth, payments
 from api.middleware.request_id import RequestIDMiddleware
 from api.middleware.logging import LoggingMiddleware
 from api.middleware.security_headers import SecurityHeadersMiddleware
@@ -45,11 +45,10 @@ app.include_router(auth.router, prefix="/auth", tags=["auth"])
 # New Google OAuth routes with GIS popup flow
 app.include_router(google_auth.router, prefix="/auth", tags=["auth", "google"])
 app.include_router(users.router, prefix="/users", tags=["users"])
-# app.include_router(payments.router, prefix="/payments", tags=["payments"])
+app.include_router(payments.router, prefix="/payments", tags=["payments"])
 app.include_router(protected.router)
 
 # Prometheus metrics endpoint
 from prometheus_client import make_asgi_app
 metrics_app = make_asgi_app()
 app.mount("/metrics", metrics_app)
-

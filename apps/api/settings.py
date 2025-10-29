@@ -77,6 +77,12 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Webapp Factory API"
     API_PREFIX: str = "/api/v1"
     ENV: str = "development"
+
+    # Billing / payments
+    stripe_public_key: Optional[str] = None
+    stripe_secret_key: Optional[str] = None
+    stripe_webhook_secret: Optional[str] = None
+    shopify_webhook_secret: Optional[str] = None
     
     # Component configurations (loaded dynamically)
     _auth_config: Optional[AuthConfig] = None

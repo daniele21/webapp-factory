@@ -2,10 +2,27 @@
 Pytest configuration and fixtures for the Webapp Factory API tests.
 """
 
-import os
 import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import patch
+
+# Ensure the API package is on the import path for tests
+import os
+import sys
+import importlib.util
+import importlib.machinery
+from pathlib import Path
+
+API_SRC = Path(__file__).resolve().parents[1]
+if str(API_SRC) not in sys.path:
+    sys.path.insert(0, str(API_SRC))
+
+if "api" not in sys.modules:
+    spec = importlib.machinery.ModuleSpec("api", loader=None)
+    spec.submodule_search_locations = [str(API_SRC)]
+    api_module = importlib.util.module_from_spec(spec)
+    api_module.__path__ = spec.submodule_search_locations
+    sys.modules["api"] = api_module
 
 # Set test environment variables
 os.environ["APP_JWT_SECRET"] = "test-secret-key"
