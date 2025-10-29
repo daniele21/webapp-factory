@@ -1,14 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
+import type { AppShellNavItem } from './navItems'
+import { DEFAULT_NAV_ITEMS } from './navItems'
 
-const NAV = [
-  { label: 'Dashboard', icon: '🏠', to: '/dashboard' },
-  { label: 'Users', icon: '👤', to: '/users' },
-  { label: 'Billing', icon: '💳', to: '/billing' },
-  { label: 'Settings', icon: '⚙️', to: '/settings' },
-]
-
-export function Sidebar({ className = '' }: { className?: string }) {
+export function Sidebar({ className = '', items = DEFAULT_NAV_ITEMS }: { className?: string; items?: AppShellNavItem[] }) {
   const location = useLocation()
   const [collapsed, setCollapsed] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false
@@ -39,12 +34,12 @@ export function Sidebar({ className = '' }: { className?: string }) {
       </div>
 
       <nav className="px-2 pb-3 flex-1 overflow-y-auto">
-        {NAV.map((item) => {
+        {items.map((item) => {
           const active = location.pathname.startsWith(item.to)
           return (
-            <a
+            <NavLink
               key={item.to}
-              href={item.to}
+              to={item.to}
               aria-current={active ? 'page' : undefined}
               className={`relative my-0.5 flex items-center gap-3 rounded-xl px-3 py-2.5
                           hover:bg-surface2 transition
@@ -55,7 +50,7 @@ export function Sidebar({ className = '' }: { className?: string }) {
               {active && (
                 <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-0.5 rounded bg-accent" />
               )}
-              <span className="text-lg shrink-0">{item.icon}</span>
+              {item.icon ? <span className="text-lg shrink-0">{item.icon}</span> : null}
               <span
                 className={`text-sm text-text transition-opacity ${
                   collapsed ? 'opacity-0 pointer-events-none select-none w-0' : 'opacity-100'
@@ -72,7 +67,7 @@ export function Sidebar({ className = '' }: { className?: string }) {
                   {item.label}
                 </span>
               )}
-            </a>
+            </NavLink>
           )
         })}
       </nav>

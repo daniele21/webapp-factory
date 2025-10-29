@@ -67,6 +67,7 @@ export function AuthMenu({
 }: AuthMenuProps) {
 	const { config } = useAppConfig()
 	const authMenuConfig = config?.components?.authMenu
+	const [loggingOut, setLoggingOut] = useState(false)
 
 	if (authMenuConfig?.enabled === false) {
 		return null
@@ -75,7 +76,6 @@ export function AuthMenu({
 	const resolvedProvider: AuthProviderId = loginProvider ?? authMenuConfig?.loginProvider ?? 'google'
 	const resolvedLoginLabel = loginLabel ?? authMenuConfig?.loginLabel
 	const shouldShowSettings = showSettings ?? authMenuConfig?.showSettings ?? true
-	const [loggingOut, setLoggingOut] = useState(false)
 
 	// Loading state placeholder
 	if (loading && !user) {

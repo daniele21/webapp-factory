@@ -1,13 +1,9 @@
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import type { AppShellNavItem } from './navItems'
+import { DEFAULT_NAV_ITEMS } from './navItems'
 
-export function MobileTabs({ className = '' }: { className?: string }) {
+export function MobileTabs({ className = '', items = DEFAULT_NAV_ITEMS }: { className?: string; items?: AppShellNavItem[] }) {
   const location = useLocation()
-  const items = [
-    { label: 'Home', icon: '🏠', to: '/dashboard' },
-    { label: 'Users', icon: '👤', to: '/users' },
-    { label: 'Bill', icon: '💳', to: '/billing' },
-    { label: 'Set', icon: '⚙️', to: '/settings' },
-  ]
 
   return (
     <nav
@@ -16,19 +12,19 @@ export function MobileTabs({ className = '' }: { className?: string }) {
       aria-label="Primary navigation (mobile)"
     >
       <div className="grid grid-cols-4">
-        {items.map((it) => {
-          const active = location.pathname.startsWith(it.to)
+        {items.map((item) => {
+          const active = location.pathname.startsWith(item.to)
           return (
-            <a
-              key={it.to}
-              href={it.to}
+            <Link
+              key={item.to}
+              to={item.to}
               aria-current={active ? 'page' : undefined}
               className="flex h-14 flex-col items-center justify-center gap-0.5 text-xs transition
                          focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]"
             >
-              <span className={`text-lg ${active ? 'text-accent' : 'opacity-80'}`}>{it.icon}</span>
-              <span className={`${active ? 'text-accent' : 'text-muted opacity-80'}`}>{it.label}</span>
-            </a>
+              {item.icon ? <span className={`text-lg ${active ? 'text-accent' : 'opacity-80'}`}>{item.icon}</span> : null}
+              <span className={`${active ? 'text-accent' : 'text-muted opacity-80'}`}>{item.shortLabel ?? item.label}</span>
+            </Link>
           )
         })}
       </div>

@@ -9,17 +9,19 @@ type DrawerProps = {
 	side?: 'left' | 'right'
 	trigger: ReactNode
 	children: ReactNode
+	contentClassName?: string
 }
 
-export const Drawer = ({ title, description, side = 'right', trigger, children }: DrawerProps) => (
+export const Drawer = ({ title, description, side = 'right', trigger, children, contentClassName }: DrawerProps) => (
 	<Dialog.Root>
 		<Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
 		<Dialog.Portal>
 			<Dialog.Overlay className="fixed inset-0 z-[var(--z-modal-backdrop)] bg-black/40" />
 			<Dialog.Content
 				className={cn(
-					'fixed top-0 z-[var(--z-modal)] h-full w-full max-w-md border-l border-border/70 bg-card/95 p-6 shadow-2xl transition-transform',
-					side === 'right' ? 'right-0 animate-slide-in-right' : 'left-0 animate-slide-in-left'
+					'fixed top-0 z-[var(--z-modal)] h-full w-full max-w-sm border-l border-border/70 bg-surface1 p-6 shadow-2xl transition-transform',
+					side === 'right' ? 'right-0 animate-slide-in-right' : 'left-0 animate-slide-in-left',
+					contentClassName
 				)}
 			>
 				<Dialog.Title className="text-lg font-semibold">{title}</Dialog.Title>

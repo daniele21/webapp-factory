@@ -2,13 +2,18 @@ import type { ReactNode } from 'react'
 import { Topbar } from './Topbar'
 import { Sidebar } from './Sidebar'
 import { MobileTabs } from './MobileTabs'
+import type { AppShellNavItem } from './navItems'
+import { DEFAULT_NAV_ITEMS } from './navItems'
 
 export type AppShellProps = {
   children: ReactNode
   topbarActions?: ReactNode
+  navItems?: AppShellNavItem[]
 }
 
-export function AppShell({ children, topbarActions }: AppShellProps) {
+export function AppShell({ children, topbarActions, navItems }: AppShellProps) {
+  const items = navItems ?? DEFAULT_NAV_ITEMS
+
   return (
     <div className="min-h-dvh bg-bg text-text">
       {/* Skip to content link for accessibility */}
@@ -21,18 +26,18 @@ export function AppShell({ children, topbarActions }: AppShellProps) {
         Skip to content
       </a>
 
-      <Topbar actions={topbarActions} />
+      <Topbar actions={topbarActions} navItems={items} />
 
       <div className="flex">
         {/* Desktop sidebar */}
-        <Sidebar className="hidden md:flex" />
+        <Sidebar className="hidden md:flex" items={items} />
         <main id="main" className="flex-1 min-w-0 px-4 py-4 md:px-6 md:py-6 pb-20 md:pb-6">
           {children}
         </main>
       </div>
 
       {/* Mobile bottom tabs */}
-      <MobileTabs className="md:hidden" />
+      <MobileTabs className="md:hidden" items={items} />
     </div>
   )
 }
