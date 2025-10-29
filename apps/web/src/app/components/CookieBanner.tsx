@@ -1,3 +1,10 @@
+/**
+ * CookieBanner
+ * Improved UI using the project's design-system components.
+ * - Uses `SwitchField` and `Button` from design-system
+ * - Adds an inline cookie icon and improved layout
+ * - Preserves existing consent logic and server notification
+ */
 import { useEffect, useMemo, useState } from 'react'
 import { useAppConfig } from '@config/src/provider'
 import { useCookieConsent } from '@/lib/useCookieConsent'
@@ -5,6 +12,20 @@ import {
 	OPEN_COOKIE_PREFERENCES_EVENT,
 	type ConsentMap,
 } from '@/lib/cookieConsentEvents'
+import { SwitchField } from '@/app/components/design-system'
+import { Button } from '@/app/components/design-system/controls'
+
+// Minimal inline cookie SVG to avoid extra icon dependencies
+function CookieIconSVG(props: React.SVGProps<SVGSVGElement>) {
+	return (
+		<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
+			<circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
+			<circle cx="9" cy="9" r="0.8" fill="currentColor" />
+			<circle cx="14" cy="11" r="0.7" fill="currentColor" />
+			<circle cx="11" cy="15" r="0.6" fill="currentColor" />
+		</svg>
+	)
+}
 
 type CookieCategory = {
 	id: string
@@ -95,36 +116,27 @@ export function CookieBanner() {
 		<>
 			{showBanner && (
 				<div aria-live="polite" className="fixed inset-x-4 bottom-6 z-50 md:inset-x-8">
-					<div className="mx-auto max-w-3xl rounded-2xl border border-border bg-surface1/98 p-4 shadow-lg backdrop-blur">
-						<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-							<div className="space-y-1 text-sm text-muted-fg">
-								<div className="text-base font-semibold text-text">We use cookies</div>
-								<p>
-									We use necessary cookies to make the site work. Optional cookies help us improve analytics and personalise content.
-									<button
-										type="button"
-										onClick={() => setManageOpen(true)}
-										className="ml-2 font-medium underline"
-									>
-										Manage
-									</button>
-								</p>
+					<div className="mx-auto max-w-3xl">
+						<div className="flex flex-col gap-4 rounded-3xl border border-border/70 bg-surface1/95 p-5 shadow-[0_20px_45px_-15px_rgba(15,23,42,0.45)] backdrop-blur-md transition-all duration-200 supports-[backdrop-filter]:backdrop-blur-xl md:flex-row md:items-center md:gap-6">
+							<div className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+								<CookieIconSVG className="h-6 w-6" />
 							</div>
-							<div className="flex shrink-0 gap-2">
-								<button
-									type="button"
-									onClick={handleRejectAll}
-									className="rounded-md border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface2"
-								>
-									Reject all
-								</button>
-								<button
-									type="button"
-									onClick={handleAcceptAll}
-									className="rounded-md bg-accent px-3 py-2 text-sm font-medium text-accent-fg transition hover:brightness-95"
-								>
+							<div className="flex-1 text-sm text-muted-fg">
+								<div className="text-base font-semibold text-text">We use cookies</div>
+								<p className="mt-1 leading-relaxed">
+									We use essential cookies to make this experience work. Optional analytics help us learn what works best for you.
+								</p>
+								<Button type="button" variant="ghost" size="sm" className="mt-3 px-0 text-sm font-medium text-accent hover:text-accent" onClick={() => setManageOpen(true)}>
+									Review preferences
+								</Button>
+							</div>
+							<div className="flex shrink-0 flex-col gap-2 md:flex-row">
+								<Button type="button" variant="outline" className="md:min-w-[120px]" onClick={handleRejectAll}>
+									Reject optional
+								</Button>
+								<Button type="button" variant="default" className="md:min-w-[120px]" onClick={handleAcceptAll}>
 									Accept all
-								</button>
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -132,137 +144,82 @@ export function CookieBanner() {
 			)}
 
 			{manageOpen && (
-				<CookieManageModal
-					categories={categories}
-					consent={consent}
-					onClose={() => setManageOpen(false)}
-					onToggle={(id, value) => update(id, value)}
-					onAcceptAll={handleAcceptAll}
-					onRejectAll={handleRejectAll}
-					onSave={handleSave}
-				/>
+				<div
+					role="dialog"
+					aria-modal="true"
+					aria-label="Cookie preferences"
+					className="fixed inset-0 z-[60] flex items-center justify-center p-6"
+				>
+					<div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setManageOpen(false)} />
+					<div className="relative z-10 w-full max-w-2xl rounded-3xl border border-border/60 bg-surface1/98 p-8 font-normal shadow-[0_35px_80px_-40px_rgba(15,23,42,0.8)]">
+						<div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+							<div>
+								<h2 className="text-lg font-semibold text-text">Cookie preferences</h2>
+								<p className="text-sm text-muted-fg">
+									Choose which optional cookies we can use. You can update your decision whenever you like.
+								</p>
+							</div>
+							<div className="flex items-center gap-3 rounded-2xl bg-accent/10 px-3 py-2 text-accent">
+								<CookieIconSVG className="h-5 w-5" />
+								<span className="text-xs font-semibold uppercase tracking-[0.18em]">Privacy first</span>
+							</div>
+						</div>
+
+						<div className="mt-6 space-y-4">
+							{categories.map((category) => {
+								const checked = Boolean(consent[category.id])
+								return (
+									<div
+										key={category.id}
+										className="flex items-start justify-between gap-4 rounded-2xl border border-border/60 bg-surface2/80 p-5 transition hover:border-accent/50 hover:shadow-md"
+									>
+										<div>
+											<div className="font-medium text-text">
+												{category.label}
+												{category.isEssential ? ' (required)' : ''}
+											</div>
+											{category.description && (
+												<p className="mt-1 text-sm text-muted-fg">{category.description}</p>
+											)}
+										</div>
+										{category.isEssential ? (
+											<span className="text-xs font-medium uppercase tracking-wide text-muted-fg">Always on</span>
+										) : (
+											<SwitchField
+												checked={checked}
+												onCheckedChange={(val: boolean) => update(category.id, Boolean(val))}
+												aria-label={`Toggle ${category.label}`}
+											/>
+										)}
+									</div>
+								)
+							})}
+						</div>
+
+						<div className="mt-8 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+							<div className="flex gap-2">
+								<Button type="button" variant="outline" onClick={handleRejectAll}>
+									Reject optional
+								</Button>
+								<Button type="button" variant="default" onClick={handleAcceptAll}>
+									Accept all
+								</Button>
+							</div>
+							<div className="flex gap-2">
+								<Button type="button" variant="ghost" onClick={() => setManageOpen(false)}>
+									Cancel
+								</Button>
+								<Button type="button" variant="default" onClick={handleSave}>
+									Save preferences
+								</Button>
+							</div>
+						</div>
+					</div>
+				</div>
 			)}
 		</>
 	)
 }
 
-type CookieManageModalProps = {
-	categories: CookieCategory[]
-	consent: ConsentMap
-	onToggle: (id: string, value: boolean) => void
-	onClose: () => void
-	onSave: () => void
-	onAcceptAll: () => void
-	onRejectAll: () => void
-}
-
-function CookieManageModal({
-	categories,
-	consent,
-	onToggle,
-	onClose,
-	onSave,
-	onAcceptAll,
-	onRejectAll,
-}: CookieManageModalProps) {
-	useEffect(() => {
-		const onKeyDown = (event: KeyboardEvent) => {
-			if (event.key === 'Escape') onClose()
-		}
-		window.addEventListener('keydown', onKeyDown)
-		return () => window.removeEventListener('keydown', onKeyDown)
-	}, [onClose])
-
-	return (
-		<div
-			role="dialog"
-			aria-modal="true"
-			aria-label="Cookie preferences"
-			className="fixed inset-0 z-[60] flex items-center justify-center p-4"
-		>
-			<div className="absolute inset-0 bg-black/50" onClick={onClose} />
-			<div className="relative z-10 w-full max-w-2xl rounded-2xl border border-border bg-surface1 p-6 shadow-xl">
-				<div className="flex flex-col gap-2">
-					<h2 className="text-lg font-semibold text-text">Cookie preferences</h2>
-					<p className="text-sm text-muted-fg">
-						Choose which optional cookies we can use. You can update your choice at any time.
-					</p>
-				</div>
-
-				<div className="mt-4 space-y-3">
-					{categories.map((category) => {
-						const checked = Boolean(consent[category.id])
-						return (
-							<div
-								key={category.id}
-								className="flex items-start justify-between gap-4 rounded-xl border border-border bg-surface2/60 p-4"
-							>
-								<div>
-									<div className="font-medium text-text">
-										{category.label}
-										{category.isEssential ? ' (required)' : ''}
-									</div>
-									{category.description && (
-										<p className="mt-1 text-sm text-muted-fg">{category.description}</p>
-									)}
-								</div>
-								{category.isEssential ? (
-									<span className="text-xs font-medium uppercase tracking-wide text-muted-fg">
-										Always on
-									</span>
-								) : (
-									<label className="inline-flex items-center gap-2 text-sm text-text">
-										<input
-											type="checkbox"
-											checked={checked}
-											onChange={(event) => onToggle(category.id, event.target.checked)}
-											className="h-4 w-4 rounded border border-border accent-accent"
-										/>
-										<span>{checked ? 'Allowed' : 'Blocked'}</span>
-									</label>
-								)}
-							</div>
-						)
-					})}
-				</div>
-
-				<div className="mt-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-					<div className="flex gap-2">
-						<button
-							type="button"
-							onClick={onRejectAll}
-							className="rounded-md border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface2"
-						>
-							Reject optional
-						</button>
-						<button
-							type="button"
-							onClick={onAcceptAll}
-							className="rounded-md bg-accent px-3 py-2 text-sm font-medium text-accent-fg transition hover:brightness-95"
-						>
-							Accept all
-						</button>
-					</div>
-					<div className="flex gap-2">
-						<button
-							type="button"
-							onClick={onClose}
-							className="rounded-md border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface2"
-						>
-							Cancel
-						</button>
-						<button
-							type="button"
-							onClick={onSave}
-							className="rounded-md bg-accent px-3 py-2 text-sm font-medium text-accent-fg transition hover:brightness-95"
-						>
-							Save preferences
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	)
-}
 
 export default CookieBanner

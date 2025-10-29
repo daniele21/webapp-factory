@@ -3,9 +3,12 @@
   /* surface & text */
   --bg: 0 0% 100%;
   --fg: 222 47% 11%;
+  --text: var(--fg);
   --muted: 220 14% 96%;
   --muted-fg: 222 47% 35%;
   --card: 0 0% 100%;
+  --surface-1: 0 0% 100%;
+  --surface-2: 210 20% 98%;
   --border: 220 13% 91%;
   --input: 220 13% 91%;
   --ring: 221 83% 53%;
