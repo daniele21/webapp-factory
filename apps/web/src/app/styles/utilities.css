@@ -1,6 +1,43 @@
 /* Modern Utility Classes for Enhanced User Experience */
 
 @layer utilities {
+  :root[data-transparency='off'] .backdrop-blur,
+  :root[data-transparency='off'] .backdrop-blur-sm,
+  :root[data-transparency='off'] .backdrop-blur-md,
+  :root[data-transparency='off'] .backdrop-blur-xl,
+  :root[data-transparency='off'] .supports-\[backdrop-filter\]\:backdrop-blur,
+  :root[data-transparency='off'] .supports-\[backdrop-filter\]\:backdrop-blur-xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  :root[data-transparency='off'] .bg-surface1\/95,
+  :root[data-transparency='off'] .bg-surface1\/98,
+  :root[data-transparency='off'] .bg-surface1\/90,
+  :root[data-transparency='off'] .bg-surface1\/80,
+  :root[data-transparency='off'] .bg-surface1\/70 {
+    background-color: hsl(var(--surface1)) !important;
+  }
+
+  :root[data-transparency='off'] .bg-surface2\/90,
+  :root[data-transparency='off'] .bg-surface2\/80,
+  :root[data-transparency='off'] .bg-surface2\/70,
+  :root[data-transparency='off'] .bg-surface2\/60,
+  :root[data-transparency='off'] .bg-surface2\/50,
+  :root[data-transparency='off'] .bg-surface2\/40 {
+    background-color: hsl(var(--surface2)) !important;
+  }
+
+  :root[data-transparency='off'] .bg-card\/95 {
+    background-color: hsl(var(--card)) !important;
+  }
+
+  :root[data-transparency='off'] .bg-bg\/95,
+  :root[data-transparency='off'] .bg-bg\/90,
+  :root[data-transparency='off'] .bg-bg\/80 {
+    background-color: hsl(var(--bg)) !important;
+  }
+
   /* === LAYOUT UTILITIES === */
   
   /* Flex center shortcuts */
@@ -152,6 +189,14 @@
   .component-backdrop {
     backdrop-filter: var(--component-backdrop);
     -webkit-backdrop-filter: var(--component-backdrop);
+  }
+
+  .overlay-surface {
+    background: hsl(var(--overlay-bg));
+    border: 1px solid hsl(var(--overlay-border));
+    box-shadow: var(--overlay-shadow);
+    backdrop-filter: var(--overlay-backdrop);
+    -webkit-backdrop-filter: var(--overlay-backdrop);
   }
 
   .component-motion {

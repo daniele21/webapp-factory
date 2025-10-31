@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../providers/AuthProvider'
 import { AuthMenu, AppShell, Header } from '../../../components/design-system'
 import { AuthMenuConnected } from '../../../components/AuthMenuConnected'
+import type { AuthUser } from '../../factory/navigation/AuthMenu'
 
 /**
  * Authentication UI Component Examples
@@ -116,11 +117,7 @@ export function Example5_AppShellLayout({ children }: { children: React.ReactNod
  * Useful for testing or when not using AuthProvider.
  */
 export function Example6_ManualControl() {
-	const [user, setUser] = React.useState<{
-		name?: string
-		email: string
-		roles?: string[]
-	} | null>(null)
+	const [user, setUser] = React.useState<AuthUser | null>(null)
 	const [loading, setLoading] = React.useState(false)
 
 	const handleLogin = () => {

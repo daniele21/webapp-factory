@@ -5,8 +5,12 @@
     "declaration": true,
     "declarationMap": true,
     "outDir": "./dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "typeRoots": [
+      "../../apps/web/node_modules/@types",
+      "../../node_modules/@types"
+    ]
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "react-shim.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

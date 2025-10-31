@@ -1,6 +1,7 @@
 from fastapi import Depends, Header, HTTPException, Request, status
 from .jwt import verify_access_jwt
 from .models import AuthClaims
+from api.services.auth_service import get_current_user
 
 
 def _extract_bearer_token(authorization: str | None) -> str:
@@ -13,19 +14,38 @@ def _extract_bearer_token(authorization: str | None) -> str:
     return authorization.split(" ", 1)[1].strip()
 
 
-def auth_required(authorization: str | None = Header(None)) -> AuthClaims:
+async def _claims_from_session(request: Request) -> AuthClaims | None:
+    user = await get_current_user(request)
+    if not user or not user.get("id"):
+        return None
+    return AuthClaims(
+        sub=str(user["id"]),
+        email=user.get("email"),
+        roles=user.get("roles") or [],
+        plan=user.get("plan"),
+    )
+
+
+async def auth_required(request: Request, authorization: str | None = Header(None)) -> AuthClaims:
     """
     FastAPI dependency that requires a valid JWT token.
-    
+
     Returns:
         AuthClaims: Validated claims from the JWT token
-    
+
     Raises:
         HTTPException: 401 if token is missing or invalid
     """
-    token = _extract_bearer_token(authorization)
-    claims_dict = verify_access_jwt(token)
-    return AuthClaims(**claims_dict)
+    if authorization:
+        token = _extract_bearer_token(authorization)
+        claims_dict = verify_access_jwt(token)
+        return AuthClaims(**claims_dict)
+
+    claims = await _claims_from_session(request)
+    if claims:
+        return claims
+
+    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
 
 
 def require_roles(*allowed: str):
@@ -43,10 +63,11 @@ def require_roles(*allowed: str):
     """
     allowed_norm = {r.lower() for r in allowed}
     
-    def _dep(claims_or_auth: AuthClaims | str = Depends(auth_required)) -> AuthClaims:
+    async def _dep(claims_or_auth: AuthClaims | str = Depends(auth_required)) -> AuthClaims:
         # Support being called directly in tests with an authorization header
         if isinstance(claims_or_auth, str):
-            claims = auth_required(claims_or_auth)
+            claims_dict = verify_access_jwt(_extract_bearer_token(claims_or_auth))
+            claims = AuthClaims(**claims_dict)
         else:
             claims = claims_or_auth
 
@@ -76,9 +97,10 @@ def require_plan(*plans: str):
     """
     plans_norm = {p.lower() for p in plans}
     
-    def _dep(claims_or_auth: AuthClaims | str = Depends(auth_required)) -> AuthClaims:
+    async def _dep(claims_or_auth: AuthClaims | str = Depends(auth_required)) -> AuthClaims:
         if isinstance(claims_or_auth, str):
-            claims = auth_required(claims_or_auth)
+            claims_dict = verify_access_jwt(_extract_bearer_token(claims_or_auth))
+            claims = AuthClaims(**claims_dict)
         else:
             claims = claims_or_auth
 
@@ -108,9 +130,10 @@ def require_feature(flag: str):
     """
     flag_norm = flag.lower()
     
-    def _dep(claims_or_auth: AuthClaims | str = Depends(auth_required)) -> AuthClaims:
+    async def _dep(claims_or_auth: AuthClaims | str = Depends(auth_required)) -> AuthClaims:
         if isinstance(claims_or_auth, str):
-            claims = auth_required(claims_or_auth)
+            claims_dict = verify_access_jwt(_extract_bearer_token(claims_or_auth))
+            claims = AuthClaims(**claims_dict)
         else:
             claims = claims_or_auth
 
@@ -146,7 +169,8 @@ def require_org(org_id_param: str = "org_id"):
     ) -> AuthClaims:
         # Support direct calls where the first arg is an authorization header
         if isinstance(claims_or_auth, str):
-            claims = auth_required(claims_or_auth)
+            claims_dict = verify_access_jwt(_extract_bearer_token(claims_or_auth))
+            claims = AuthClaims(**claims_dict)
         else:
             claims = claims_or_auth
 
@@ -173,16 +197,16 @@ def require_org(org_id_param: str = "org_id"):
     return _dep
 
 
-def optional_auth(authorization: str | None = Header(None)) -> AuthClaims | None:
+async def optional_auth(request: Request, authorization: str | None = Header(None)) -> AuthClaims | None:
     """
     FastAPI dependency that optionally extracts auth claims if token is present.
-    
+
     Returns:
         AuthClaims or None: Claims if valid token provided, None otherwise
     """
     if not authorization:
-        return None
-    
+        return await _claims_from_session(request)
+
     try:
         token = _extract_bearer_token(authorization)
         claims_dict = verify_access_jwt(token)

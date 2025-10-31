@@ -58,6 +58,12 @@
   --glass-border: rgba(255, 255, 255, 0.2);
   --glass-blur: 16px;
 
+  /* overlay surfaces */
+  --overlay-bg: var(--card);
+  --overlay-border: var(--border);
+  --overlay-shadow: var(--elevation-lg);
+  --overlay-backdrop: blur(0px);
+
   /* spacing scale - enhanced */
   --space-0: 0;
   --space-px: 1px;
@@ -182,6 +188,12 @@
   --elevation-lg: 0 20px 60px rgba(0,0,0,0.45);
   --elevation-xl: 0 30px 90px rgba(0,0,0,0.6);
   --elevation-2xl: 0 40px 120px rgba(0,0,0,0.65);
+
+  /* dark overlay surface */
+  --overlay-bg: var(--surface-2);
+  --overlay-border: var(--border);
+  --overlay-shadow: var(--elevation-lg);
+  --overlay-backdrop: blur(0px);
 }
 
 /* Backwards compatibility: older code may read --text or --surface-1 directly; tokens above provide those mappings */

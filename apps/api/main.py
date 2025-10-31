@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.settings import settings
-from api.routes import health, auth, users, protected, google_auth, payments, consent
+from api.routes import health, auth, users, protected, google_auth, payments, consent, notifications
 from api.middleware.request_id import RequestIDMiddleware
 from api.middleware.logging import LoggingMiddleware
 from api.middleware.security_headers import SecurityHeadersMiddleware
@@ -48,6 +48,7 @@ app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(payments.router, prefix="/payments", tags=["payments"])
 app.include_router(protected.router)
 app.include_router(consent.router)
+app.include_router(notifications.router)
 
 # Prometheus metrics endpoint
 from prometheus_client import make_asgi_app

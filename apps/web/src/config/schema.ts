@@ -31,6 +31,103 @@ const cookieCategory = z.object({
   isEssential: z.boolean().optional(),
 })
 
+const notificationChannel = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string().optional(),
+  defaultEnabled: z.boolean().default(true),
+  channel: z.enum(['inApp', 'webPush', 'email']).default('inApp'),
+})
+
+const notificationsConfig = z
+  .object({
+    inApp: z.boolean().default(true),
+    webPush: z.boolean().default(false),
+    email: z.boolean().default(false),
+    publicKey: z.string().optional(),
+    channels: z.array(notificationChannel).optional(),
+    inboxUrl: z.string().optional(),
+    subscriptionEndpoint: z.string().optional(),
+    fallbackEmailTemplate: z.string().optional(),
+  })
+  .optional()
+
+const cspSourceList = z.array(z.string())
+
+const cspTenantOverrides = z.object({
+  default: cspSourceList.optional(),
+  script: cspSourceList.optional(),
+  style: cspSourceList.optional(),
+  img: cspSourceList.optional(),
+  connect: cspSourceList.optional(),
+  font: cspSourceList.optional(),
+  frame: cspSourceList.optional(),
+  media: cspSourceList.optional(),
+  manifest: cspSourceList.optional(),
+  worker: cspSourceList.optional(),
+  frameAncestors: cspSourceList.optional(),
+  directives: z.record(cspSourceList).optional(),
+})
+
+const cspConfig = z
+  .object({
+    default: cspSourceList.default(["'self'"]),
+    script: cspSourceList.default(["'self'"]),
+    style: cspSourceList.default(["'self'"]),
+    img: cspSourceList.default(["'self'"]),
+    connect: cspSourceList.default(["'self'"]),
+    font: cspSourceList.default(["'self'"]),
+    frame: cspSourceList.default(["'self'"]),
+    media: cspSourceList.default(["'self'"]),
+    manifest: cspSourceList.default(["'self'"]),
+    worker: cspSourceList.default(["'self'"]),
+    frameAncestors: cspSourceList.default(["'self'"]),
+    directives: z.record(cspSourceList).optional(),
+    perTenant: z.record(cspTenantOverrides).optional(),
+    reportOnly: z.boolean().optional(),
+    reportTo: z.string().optional(),
+    reportUri: z.string().optional(),
+    upgradeInsecureRequests: z.boolean().default(true),
+  })
+  .default({
+    default: ["'self'"],
+    script: ["'self'"],
+    style: ["'self'"],
+    img: ["'self'"],
+    connect: ["'self'"],
+    font: ["'self'"],
+    frame: ["'self'"],
+    media: ["'self'"],
+    manifest: ["'self'"],
+    worker: ["'self'"],
+    frameAncestors: ["'self'"],
+    upgradeInsecureRequests: true,
+  })
+
+const hstsConfig = z.object({
+  maxAge: z.number().int().nonnegative().default(31536000),
+  includeSubDomains: z.boolean().default(true),
+  preload: z.boolean().default(false),
+})
+
+const securityConfig = z
+  .object({
+    csp: cspConfig,
+    hsts: z.union([z.boolean(), hstsConfig]).default(true),
+    referrerPolicy: z.string().default('strict-origin-when-cross-origin'),
+    permissionsPolicy: z.record(z.string()).optional(),
+  })
+  .optional()
+
+const pwaConfig = z
+  .object({
+    backgroundSync: z.boolean().default(false),
+    offlinePage: z.string().default('/offline.html'),
+    appShellCaching: z.boolean().default(true),
+    updatePrompt: z.boolean().default(true),
+  })
+  .optional()
+
 export const AppConfigSchema = z.object({
   brand: z.object({
     name: z.string(),
@@ -40,6 +137,13 @@ export const AppConfigSchema = z.object({
   theme: z.object({
     light: tokens,
     dark: tokens,
+    // Optional defaults for the UI brand palette and visual style
+    defaultBrand: z.string().optional(),
+    defaultVisual: z.string().optional(),
+    // Optional locks: when true, the UI should not allow changing brand/visual
+    lockBrand: z.boolean().optional(),
+    lockVisual: z.boolean().optional(),
+    transparency: z.boolean().default(true),
     radius: z.number().min(0).max(48).default(12),
     fontFamily: z.string().optional(),
   }),
@@ -103,6 +207,9 @@ export const AppConfigSchema = z.object({
       googleAnalyticsConfig: z.record(z.unknown()).optional(),
     })
     .optional(),
+  notifications: notificationsConfig,
+  security: securityConfig,
+  pwa: pwaConfig,
 })
 
 export type AppConfig = z.infer<typeof AppConfigSchema>

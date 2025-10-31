@@ -17,15 +17,55 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
+  const refreshUser = useCallback(
+    async (token?: string) => {
+      try {
+        const headers = token ? { Authorization: `Bearer ${token}` } : undefined
+        const { data } = await api.get('/auth/me', headers ? { headers } : undefined)
+        setUser(data ?? null)
+        return data ?? null
+      } catch (error) {
+        setUser(null)
+        throw error
+      }
+    },
+    [],
+  )
+
   // Fetch current user on mount
   useEffect(() => {
-    api.get('/auth/me').then(r => setUser(r.data ?? null)).catch(() => setUser(null)).finally(() => setLoading(false))
-  }, [])
+    refreshUser().catch(() => setUser(null)).finally(() => setLoading(false))
+  }, [refreshUser])
+
+  useEffect(() => {
+    const handler = (event: MessageEvent) => {
+      const allowedOrigins = [window.location.origin]
+      const apiBase = import.meta.env.VITE_API_BASE_URL
+      if (apiBase) {
+        try {
+          allowedOrigins.push(new URL(apiBase).origin)
+        } catch {
+          // ignore parse errors
+        }
+      }
+      if (!allowedOrigins.includes(event.origin)) return
+      const data = event.data as { type?: string; status?: string; provider?: string; token?: string } | undefined
+      if (!data || data.type !== 'oauth') return
+      if (data.status === 'success') {
+        refreshUser(data.token).catch(() => {})
+      } else {
+        console.warn('OAuth popup reported failure', data)
+      }
+    }
+    window.addEventListener('message', handler)
+    return () => window.removeEventListener('message', handler)
+  }, [refreshUser])
 
   // Legacy redirect-based login (deprecated)
   const login = useCallback((provider: string = 'google') => {
     const redirect = encodeURIComponent(window.location.origin)
-    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/${provider}/login?redirect=${redirect}`
+    const loginUrl = `${import.meta.env.VITE_API_BASE_URL}/auth/${provider}/login?redirect=${redirect}`
+    window.location.href = loginUrl
   }, [])
 
   // New popup-based login with Google Identity Services

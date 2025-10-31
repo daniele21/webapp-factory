@@ -38,10 +38,11 @@
       "chartGrid": "220 12% 24%",
       "chartAxis": "220 15% 62%"
     },
-  "defaultBrand": "forest",
-  "defaultVisual": "finance",
-  "lockBrand": true,
-  "lockVisual": true,
+    "defaultBrand": "forest",
+    "defaultVisual": "finance",
+    "lockBrand": true,
+    "lockVisual": true,
+    "transparency": false,
     "radius": 14,
     "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto"
   },
@@ -120,5 +121,69 @@
       { "id": "marketing", "label": "Marketing", "description": "Personalised ads and tracking" }
     ],
     "default": ["necessary"]
+  },
+  "notifications": {
+    "inApp": true,
+    "webPush": true,
+    "email": true,
+    "publicKey": "BOr9xHIvJx4ExampleVapidKeyBase64",
+    "channels": [
+      {
+        "id": "product-updates",
+        "label": "Product updates",
+        "description": "Feature launches, roadmap highlights, and release notes.",
+        "defaultEnabled": true,
+        "channel": "email"
+      },
+      {
+        "id": "system-alerts",
+        "label": "System alerts",
+        "description": "Real-time incidents and maintenance announcements.",
+        "defaultEnabled": true,
+        "channel": "webPush"
+      },
+      {
+        "id": "team-mentions",
+        "label": "Mentions & assignments",
+        "description": "When teammates mention you or assign work items.",
+        "defaultEnabled": true,
+        "channel": "inApp"
+      }
+    ],
+    "subscriptionEndpoint": "/api/notifications/subscriptions",
+    "fallbackEmailTemplate": "default"
+  },
+  "security": {
+    "csp": {
+      "default": ["'self'"],
+      "script": ["'self'", "'unsafe-inline'", "https://accounts.google.com/gsi/client"],
+      "style": ["'self'", "'unsafe-inline'"],
+      "img": ["'self'", "data:", "https://cdn.webappfactory.dev"],
+      "connect": ["'self'", "https://api.webappfactory.dev"],
+      "font": ["'self'", "data:"],
+      "frame": ["'self'"],
+      "media": ["'self'"],
+      "manifest": ["'self'"],
+      "worker": ["'self'"],
+      "frameAncestors": ["'self'"],
+      "perTenant": {
+        "acme": {
+          "img": ["'self'", "https://media.acme.dev"],
+          "script": ["'self'", "https://analytics.acme.dev"]
+        },
+        "globex": {
+          "connect": ["'self'", "https://api.globex.example"],
+          "img": ["'self'", "https://cdn.globex.example"]
+        }
+      }
+    },
+    "hsts": true,
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  "pwa": {
+    "backgroundSync": true,
+    "offlinePage": "/offline.html",
+    "appShellCaching": false,
+    "updatePrompt": true
   }
 }

@@ -15,6 +15,10 @@ export default defineConfig(({ mode }) => {
         srcDir: '.',
         filename: 'sw.ts',
         strategies: 'injectManifest',
+        injectManifest: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}'],
+          additionalManifestEntries: [{ url: '/offline.html', revision: null }],
+        },
         manifest: {
           name: 'Webapp Factory',
           short_name: 'Factory',

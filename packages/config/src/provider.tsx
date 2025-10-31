@@ -273,5 +273,56 @@ function getFallbackConfig(): AppConfig {
 				],
 			},
 		},
+		notifications: {
+			inApp: true,
+			webPush: false,
+			email: true,
+			channels: [
+				{
+					id: 'product-updates',
+					label: 'Product updates',
+					description: 'Feature launches, roadmap highlights, and release notes.',
+					defaultEnabled: true,
+					channel: 'email',
+				},
+				{
+					id: 'system-alerts',
+					label: 'System alerts',
+					description: 'Real-time incidents and maintenance announcements.',
+					defaultEnabled: true,
+					channel: 'webPush',
+				},
+				{
+					id: 'team-mentions',
+					label: 'Mentions & assignments',
+					description: 'When teammates mention you or assign work items.',
+					defaultEnabled: true,
+					channel: 'inApp',
+				},
+			],
+		},
+		security: {
+			csp: {
+				default: ["'self'"],
+				script: ["'self'", "'unsafe-inline'", 'https://accounts.google.com/gsi/client'],
+				style: ["'self'", "'unsafe-inline'"],
+				img: ["'self'", 'data:', 'https://www.gravatar.com', 'https://lh3.googleusercontent.com'],
+				connect: ["'self'", 'https://accounts.google.com', 'https://oauth2.googleapis.com'],
+				font: ["'self'", 'data:'],
+				frame: ["'self'", 'https://accounts.google.com'],
+				media: ["'self'"],
+				manifest: ["'self'"],
+				worker: ["'self'"],
+				frameAncestors: ["'self'"],
+			},
+			hsts: true,
+			referrerPolicy: 'strict-origin-when-cross-origin',
+		},
+		pwa: {
+			backgroundSync: false,
+			offlinePage: '/offline.html',
+			appShellCaching: true,
+			updatePrompt: true,
+		},
 	} as unknown as AppConfig)
 }

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { LogOut, User, Settings, ChevronDown, Loader2 } from 'lucide-react'
-import { Avatar } from '../primitives/Avatar'
-import { Popover } from '../overlays/Popover'
-import { OAuthButton, type AuthProviderId } from './OAuthButton'
+import { Avatar } from '../../design-system/primitives/Avatar'
+import { Popover } from '../../design-system/overlays/Popover'
+import { OAuthButton, type AuthProviderId } from '../../design-system/navigation/OAuthButton'
 import { useAppConfig } from '@config/src/provider'
+import { useTransparencyPreference } from '@/app/lib/useTransparencyPreference'
+import { cn } from '@/app/lib/cn'
 
 export type AuthUser = {
 	id: string
@@ -68,6 +70,7 @@ export function AuthMenu({
 	const { config } = useAppConfig()
 	const authMenuConfig = config?.components?.authMenu
 	const [loggingOut, setLoggingOut] = useState(false)
+	const transparencyEnabled = useTransparencyPreference()
 
 	if (authMenuConfig?.enabled === false) {
 		return null
@@ -140,7 +143,12 @@ export function AuthMenu({
 				</button>
 			}
 		>
-			<div className="min-w-[220px] space-y-2 rounded-xl border border-border/60 bg-bg/95 p-2 shadow-lg backdrop-blur">
+			<div
+				className={cn(
+					'min-w-[220px] space-y-2 rounded-xl border border-border/60 p-2 shadow-lg',
+					transparencyEnabled ? 'bg-bg/95 backdrop-blur' : 'bg-bg'
+				)}
+			>
 				{/* Name and email (compact) */}
 				<div className="rounded-md px-2 py-2">
 					<div className="flex items-center gap-2">

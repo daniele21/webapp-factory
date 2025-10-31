@@ -1,6 +1,7 @@
 import { KBarProvider, KBarAnimator, KBarPortal, KBarPositioner, KBarResults, KBarSearch, type Action as KBarAction, useMatches } from 'kbar'
 import { cn } from '../../../lib/cn'
 import type { ReactNode } from 'react'
+import { useTransparencyPreference } from '@/app/lib/useTransparencyPreference'
 
 type CommandMenuProps = {
 	actions: KBarAction[]
@@ -16,10 +17,21 @@ export function CommandMenu({ actions }: CommandMenuProps) {
 
 function CommandSurface() {
 	const { results } = useMatches()
+	const transparencyEnabled = useTransparencyPreference()
 	return (
 		<KBarPortal>
-			<KBarPositioner className="fixed inset-0 z-[var(--z-modal)] grid place-items-center bg-black/40 backdrop-blur-sm">
-				<KBarAnimator className="w-full max-w-2xl overflow-hidden rounded-3xl border border-border/70 bg-card/95 shadow-2xl">
+			<KBarPositioner
+				className={cn(
+					'fixed inset-0 z-[var(--z-modal)] grid place-items-center',
+					transparencyEnabled ? 'bg-black/40 backdrop-blur-sm' : 'bg-black/90'
+				)}
+			>
+				<KBarAnimator
+					className={cn(
+						'w-full max-w-2xl overflow-hidden rounded-3xl border border-border/70 shadow-2xl',
+						transparencyEnabled ? 'bg-card/95' : 'bg-card'
+					)}
+				>
 					<KBarSearch className="w-full border-b border-border/70 bg-transparent px-4 py-3 text-sm outline-none" placeholder="Search actions" />
 					<KBarResults
 						items={results}

@@ -5,6 +5,9 @@ import { useAppConfig } from '@config/src/provider'
 import { Drawer } from '../overlays/Drawer'
 import type { AppShellNavItem } from './navItems'
 import { DEFAULT_NAV_ITEMS } from './navItems'
+import { NotificationCenterButton } from '@/app/components/notifications/NotificationCenter'
+import { useTransparencyPreference } from '@/app/lib/useTransparencyPreference'
+import { cn } from '@/app/lib/cn'
 
 export type TopbarProps = {
   actions?: ReactNode
@@ -16,14 +19,18 @@ export type TopbarProps = {
 export function Topbar({ actions, navItems = DEFAULT_NAV_ITEMS, showThemeToggle }: TopbarProps = {}) {
   const { mode, setMode } = useTheme()
   const { config } = useAppConfig()
+  const transparencyEnabled = useTransparencyPreference()
   const configShowTheme = config?.layout?.topbar?.showThemeToggle
   const shouldShowTheme = typeof showThemeToggle === 'boolean' ? showThemeToggle : configShowTheme ?? true
+  const showNotifications = config?.layout?.topbar?.showNotifications ?? true
   const location = useLocation()
 
   return (
     <header
-      className="sticky top-0 z-40 h-14 w-full border-b border-border
-                 bg-surface1/95 backdrop-blur supports-[backdrop-filter]:bg-surface1/80"
+      className={cn(
+        'sticky top-0 z-40 h-14 w-full border-b border-border',
+        transparencyEnabled ? 'bg-surface1/95 backdrop-blur supports-[backdrop-filter]:bg-surface1/80' : 'bg-surface1'
+      )}
     >
       <div className="mx-auto flex h-full items-center gap-2 px-3 md:px-4">
         {/* Mobile menu button */}
@@ -34,9 +41,10 @@ export function Topbar({ actions, navItems = DEFAULT_NAV_ITEMS, showThemeToggle 
             contentClassName="bg-surface1 text-fg"
             trigger={
               <button
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg
-                           border border-border bg-surface1/80 hover:bg-surface2 transition focus-visible:outline-2
-                           focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]"
+                className={cn(
+                  'inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]',
+                  transparencyEnabled ? 'bg-surface1/80 hover:bg-surface2' : 'bg-surface1 hover:bg-surface2'
+                )}
                 aria-label="Open navigation"
               >
                 ☰
@@ -106,16 +114,7 @@ export function Topbar({ actions, navItems = DEFAULT_NAV_ITEMS, showThemeToggle 
               {mode === 'dark' ? '🌙' : '☀️'}
             </button>
           ) : null}
-          <button
-            className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border hover:bg-surface2 transition
-                       focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]"
-            aria-label="Notifications"
-          >
-            🔔
-            <span className="absolute -right-0.5 -top-0.5 h-4 min-w-4 rounded-full bg-accent text-accent-fg text-[10px] leading-4 text-center px-1">
-              3
-            </span>
-          </button>
+          {showNotifications ? <NotificationCenterButton /> : null}
           {actions ?? (
             <button
               className="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-border
