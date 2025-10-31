@@ -3,17 +3,22 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '../../lib/cn'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-bg',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-semibold tracking-tight transition-all duration-200 ease-out focus-visible:outline-none disabled:opacity-60 disabled:pointer-events-none shadow-sm hover:shadow-md active:shadow-none active:translate-y-0.5',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-fg hover:opacity-90',
-        secondary: 'bg-secondary text-secondary-fg hover:opacity-90',
-        ghost: 'hover:bg-muted',
-        outline: 'border border-border hover:bg-muted',
-        destructive: 'bg-destructive text-destructive-fg hover:opacity-90',
+        default: 'bg-primary text-primary-fg hover:bg-primary/90',
+        secondary: 'bg-secondary text-secondary-fg hover:bg-secondary/85',
+        ghost: 'text-foreground hover:bg-muted/20',
+        outline: 'border border-border/70 bg-transparent text-foreground hover:bg-muted/80',
+        destructive: 'bg-destructive text-destructive-fg hover:bg-destructive/90',
       },
-      size: { sm: 'h-8 px-3', md: 'h-9 px-4', lg: 'h-10 px-6' },
+      size: {
+        sm: 'h-8 px-3 text-xs',
+        md: 'h-10 px-4',
+        lg: 'h-11 px-6 text-base',
+        icon: 'h-10 w-10 p-0',
+      },
     },
     defaultVariants: { variant: 'default', size: 'md' },
   }

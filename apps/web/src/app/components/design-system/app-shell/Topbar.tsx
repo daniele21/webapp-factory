@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, Moon, Search, Sun } from 'lucide-react'
-import { useTheme } from '../../../theme/ThemeProvider'
+import { Menu, Search } from 'lucide-react'
 import { useAppConfig } from '@config/src/provider'
 import { Drawer } from '../overlays/Drawer'
 import type { AppShellNavItem } from './navItems'
@@ -10,6 +9,7 @@ import { NotificationCenterButton } from '@/app/components/notifications/Notific
 import { Button } from '@/app/components/ui/button'
 import { useTransparencyPreference } from '@/app/lib/useTransparencyPreference'
 import { cn } from '@/app/lib/cn'
+import { ThemeToggleButton } from './ThemeToggleButton'
 
 export type TopbarProps = {
   actions?: ReactNode
@@ -19,7 +19,6 @@ export type TopbarProps = {
 }
 
 export function Topbar({ actions, navItems = DEFAULT_NAV_ITEMS, showThemeToggle }: TopbarProps = {}) {
-  const { mode, setMode } = useTheme()
   const { config } = useAppConfig()
   const transparencyEnabled = useTransparencyPreference()
   const configShowTheme = config?.layout?.topbar?.showThemeToggle
@@ -127,18 +126,7 @@ export function Topbar({ actions, navItems = DEFAULT_NAV_ITEMS, showThemeToggle 
           </Button>
 
           {/* Actions: theme, notifications, account */}
-          {shouldShowTheme ? (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="inline-flex h-9 w-9 rounded-xl p-0 text-muted-fg hover:text-fg"
-              onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
-              aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
-            >
-              {mode === 'dark' ? <Moon className="h-4 w-4" aria-hidden /> : <Sun className="h-4 w-4" aria-hidden />}
-            </Button>
-          ) : null}
+          {shouldShowTheme ? <ThemeToggleButton /> : null}
           {showNotifications ? <NotificationCenterButton /> : null}
           {actions ?? (
             <button
