@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { LogOut, User, Settings, ChevronDown, Loader2 } from 'lucide-react'
+import { LogIn, LogOut, User, Settings, Loader2 } from 'lucide-react'
 import { Avatar } from '../../design-system/primitives/Avatar'
 import { Popover } from '../../design-system/overlays/Popover'
-import { OAuthButton, type AuthProviderId } from '../../design-system/navigation/OAuthButton'
+import { type AuthProviderId } from '../../design-system/navigation/OAuthButton'
 import { useAppConfig } from '@config/src/provider'
 import { useTransparencyPreference } from '@/app/lib/useTransparencyPreference'
 import { cn } from '@/app/lib/cn'
@@ -95,13 +95,19 @@ export function AuthMenu({
 	// Not authenticated - show login button
 	if (!user) {
 		return (
-			<OAuthButton
-				provider={resolvedProvider}
-				label={resolvedLoginLabel}
-				loading={loading}
+			<button
+				type="button"
 				onClick={() => onLogin?.(resolvedProvider)}
-				aria-label="Sign in"
-			/>
+				disabled={loading}
+				className="flex items-center gap-2 rounded-[var(--button-radius)] bg-[var(--secondary)] px-3 py-2 text-sm font-medium text-[var(--secondary-foreground)] transition-colors hover:bg-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] disabled:cursor-not-allowed disabled:opacity-60"
+			>
+				{loading ? (
+					<Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+				) : (
+					<LogIn className="h-4 w-4" aria-hidden="true" />
+				)}
+				<span>{resolvedLoginLabel ?? 'Login'}</span>
+			</button>
 		)
 	}
 
@@ -125,96 +131,83 @@ export function AuthMenu({
 		<Popover
 			trigger={
 				<button
-					className="group flex items-center gap-2 rounded-full px-2 py-1 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+					className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
 					aria-label="User menu"
 				>
 					<Avatar
 						src={user.picture}
 						fallback={initials}
-						size={28}
+						size={40}
 					/>
-					<div className="hidden sm:flex flex-col items-start min-w-0">
-						<span className="font-medium leading-none truncate">{displayName}</span>
-						<span className="text-[11px] uppercase tracking-wide text-muted-fg/80 truncate">
-							{user.roles?.[0] ?? 'Member'}
-						</span>
-					</div>
-					<ChevronDown className="hidden md:block h-4 w-4 text-muted-fg transition group-hover:translate-y-[1px]" aria-hidden="true" />
 				</button>
 			}
 		>
 			<div
 				className={cn(
-					'min-w-[220px] space-y-2 rounded-xl border border-border/60 p-2 shadow-lg',
+					'min-w-[220px] rounded-xl border border-border/60 p-2 shadow-lg',
 					transparencyEnabled ? 'bg-bg/95 backdrop-blur' : 'bg-bg'
 				)}
 			>
-				{/* Name and email (compact) */}
 				<div className="rounded-md px-2 py-2">
-					<div className="flex items-center gap-2">
-						<Avatar src={user.picture} fallback={initials} size={36} />
-						<div className="flex flex-col min-w-0">
-							<span className="text-sm font-medium text-fg truncate">{displayName}</span>
-							<span className="text-xs text-muted-fg/80 truncate">{user.email}</span>
-						</div>
+					<p className="text-sm font-semibold text-fg">{displayName}</p>
+					<p className="text-xs text-muted-fg/80">{user.email}</p>
+				</div>
+
+				{(user.roles?.length || user.plan) && (
+					<div className="flex flex-wrap items-center gap-2 px-2 pb-2">
+						{user.roles?.[0] && (
+							<span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-primary">
+								{user.roles[0]}
+							</span>
+						)}
+						{user.plan && (
+							<span className="inline-flex items-center rounded-full bg-primary/5 px-2 py-0.5 text-[11px] font-medium text-primary">
+								{user.plan}
+							</span>
+						)}
 					</div>
-				</div>
+				)}
 
-				{/* Role and Plan on same compact row */}
-				<div className="flex items-center justify-end gap-2 px-2">
-					{(user.roles && user.roles.length > 0) && (
-						<span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-primary">
-							{user.roles[0]}
-						</span>
-					)}
-					{user.plan && (
-						<span className="inline-flex items-center rounded-full bg-primary/5 px-2 py-0.5 text-[11px] font-medium text-primary">
-							{user.plan}
-						</span>
-					)}
-				</div>
+				<div className="my-1 border-t border-border/70" />
 
-				{/* Menu items */}
-				<div className="space-y-1">
+				<button
+					type="button"
+					className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-[var(--accent)]"
+					onClick={() => { /* reserved for profile navigation */ }}
+					aria-label="View profile"
+				>
+					<User className="h-4 w-4" aria-hidden="true" />
+					<span>Profile</span>
+				</button>
+
+				{shouldShowSettings && (
 					<button
 						type="button"
-						className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-						onClick={() => {/* Navigate to profile or handle profile action */}}
-						aria-label="View profile"
+						className="mt-1 flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-[var(--accent)]"
+						onClick={onSettingsClick}
+						aria-label="Settings"
 					>
-						<User className="h-4 w-4 text-muted-fg" aria-hidden="true" />
-						<span>Profile</span>
+						<Settings className="h-4 w-4" aria-hidden="true" />
+						<span>Settings</span>
 					</button>
+				)}
 
-					{shouldShowSettings && (
-						<button
-							type="button"
-							className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-							onClick={onSettingsClick}
-							aria-label="Settings"
-						>
-							<Settings className="h-4 w-4 text-muted-fg" aria-hidden="true" />
-							<span>Settings</span>
-						</button>
+				<div className="my-1 border-t border-border/70" />
+
+				<button
+					type="button"
+					className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium text-error transition-colors hover:bg-error/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/40 disabled:opacity-60"
+					onClick={handleLogout}
+					disabled={loggingOut}
+					aria-label="Sign out"
+				>
+					{loggingOut ? (
+						<Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+					) : (
+						<LogOut className="h-4 w-4" aria-hidden="true" />
 					)}
-
-					<div className="border-t border-border/70 pt-2 mt-2">
-						<button
-							type="button"
-							className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-error transition hover:bg-error/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/40 disabled:opacity-60"
-							onClick={handleLogout}
-							disabled={loggingOut}
-							aria-label="Sign out"
-						>
-							{loggingOut ? (
-								<Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-							) : (
-								<LogOut className="h-4 w-4" aria-hidden="true" />
-							)}
-							<span>{loggingOut ? 'Signing out…' : 'Sign out'}</span>
-						</button>
-					</div>
-				</div>
+					<span>{loggingOut ? 'Signing out…' : 'Logout'}</span>
+				</button>
 			</div>
 		</Popover>
 	)
