@@ -4,7 +4,6 @@ import { AppShell, ToastProvider } from './components/design-system'
 import { AuthMenuConnected } from './components/AuthMenuConnected'
 import { CookieBanner } from './components/CookieBanner'
 import { useLoadAnalytics } from '@/lib/useLoadScriptIfConsent'
-import { PWAUpdatePrompt } from './components/PWAUpdatePrompt'
 import { useTransparencyPreference } from '@/app/lib/useTransparencyPreference'
 
 export default function App() {
@@ -30,9 +29,8 @@ export default function App() {
 				)}
 			>
 				<Outlet />
-      </AppShell>
-      <CookieBanner />
-      <PWAUpdatePrompt />
-    </ToastProvider>
-  )
+			</AppShell>
+			<CookieBanner />
+		</ToastProvider>
+	)
 }

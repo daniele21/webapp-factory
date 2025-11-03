@@ -9,6 +9,7 @@ import { AppConfigProvider } from '@config/src/provider'
 import './app/styles/index.css'
 import { trackRouteChange } from './app/lib/analytics'
 import { useTheme } from './app/theme/ThemeProvider'
+import { PwaUpdateToast } from './pwa/usePwaUpdate'
 
 const router = createBrowserRouter(routes)
 router.subscribe((state) => trackRouteChange(state.location))
@@ -23,15 +24,16 @@ function AppConfigBridge({ children }: { children: React.ReactNode }) {
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <QueryProvider>
-      <AuthProvider>
-        <ThemeProvider>
-          <AppConfigBridge>
-            <RouterProvider router={router} />
-          </AppConfigBridge>
-        </ThemeProvider>
-      </AuthProvider>
-    </QueryProvider>
-  </React.StrictMode>
+	<React.StrictMode>
+		<QueryProvider>
+			<AuthProvider>
+				<ThemeProvider>
+					<AppConfigBridge>
+						<RouterProvider router={router} />
+					</AppConfigBridge>
+					<PwaUpdateToast />
+				</ThemeProvider>
+			</AuthProvider>
+		</QueryProvider>
+	</React.StrictMode>
 )
