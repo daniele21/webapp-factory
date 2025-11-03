@@ -83,6 +83,11 @@ class Settings(BaseSettings):
     stripe_secret_key: Optional[str] = None
     stripe_webhook_secret: Optional[str] = None
     shopify_webhook_secret: Optional[str] = None
+
+    # Feedback / telemetry integrations
+    telegram_bot_token: Optional[str] = None
+    telegram_chat_id: Optional[str] = None
+    feedback_require_auth: bool = False
     
     # Component configurations (loaded dynamically)
     _auth_config: Optional[AuthConfig] = None
@@ -274,6 +279,21 @@ class Settings(BaseSettings):
             return self._environment_config.get("frontend_base_url", "http://127.0.0.1:5173")
         # Do not hardcode frontend URL; prefer explicit APP_FRONTEND_BASE_URL setting.
         return os.getenv("APP_FRONTEND_BASE_URL")
+
+    @property
+    def TELEGRAM_BOT_TOKEN(self) -> Optional[str]:
+        """Telegram bot token for feedback delivery (backward compatibility)."""
+        return self.telegram_bot_token or os.getenv("APP_TELEGRAM_BOT_TOKEN")
+
+    @property
+    def TELEGRAM_CHAT_ID(self) -> Optional[str]:
+        """Telegram chat identifier for feedback delivery (backward compatibility)."""
+        return self.telegram_chat_id or os.getenv("APP_TELEGRAM_CHAT_ID")
+
+    @property
+    def FEEDBACK_REQUIRE_AUTH(self) -> bool:
+        """Whether feedback submissions require authentication."""
+        return bool(self.feedback_require_auth or os.getenv("APP_FEEDBACK_REQUIRE_AUTH", "").lower() in {"1", "true", "yes", "on"})
     
     # New configuration access methods
     

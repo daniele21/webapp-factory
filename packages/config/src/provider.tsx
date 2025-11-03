@@ -259,6 +259,9 @@ function getFallbackConfig(): AppConfig {
 		},
 		navigation: [],
 		features: { nprogress: true },
+		feedback: {
+			requireAuth: false,
+		},
 		components: {
 			authMenu: {
 				enabled: true,

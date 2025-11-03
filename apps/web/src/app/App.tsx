@@ -5,6 +5,7 @@ import { AuthMenuConnected } from './components/AuthMenuConnected'
 import { CookieBanner } from './components/CookieBanner'
 import { useLoadAnalytics } from '@/lib/useLoadScriptIfConsent'
 import { useTransparencyPreference } from '@/app/lib/useTransparencyPreference'
+import { FeedbackWidget } from './features/feedback/FeedbackWidget'
 
 export default function App() {
 	useLoadAnalytics()
@@ -31,6 +32,7 @@ export default function App() {
 				<Outlet />
 			</AppShell>
 			<CookieBanner />
+			<FeedbackWidget />
 		</ToastProvider>
 	)
 }

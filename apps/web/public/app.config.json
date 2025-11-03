@@ -38,7 +38,7 @@
       "chartGrid": "220 12% 24%",
       "chartAxis": "220 15% 62%"
     },
-    "defaultBrand": "forest",
+    "defaultBrand": "aurora",
     "defaultVisual": "finance",
     "lockBrand": true,
     "lockVisual": true,
@@ -94,6 +94,9 @@
   ],
   "features": {
     "nprogress": true
+  },
+  "feedback": {
+    "requireAuth": true
   },
   "analytics": {
     "enabled": true,

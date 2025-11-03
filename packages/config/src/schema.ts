@@ -173,6 +173,11 @@ export const AppConfigSchema = z.object({
     plans: z.array(z.string()).optional(),
   })),
   features: z.object({ nprogress: z.boolean().default(true) }).default({ nprogress: true }),
+  feedback: z.object({
+    requireAuth: z.boolean().default(false),
+  }).default({
+    requireAuth: false,
+  }),
   components: z.object({
     authMenu: z.object({
       enabled: z.boolean().default(true),
